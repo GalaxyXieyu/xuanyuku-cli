@@ -5,9 +5,11 @@
   "scripts": {
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
+    "pack:cli": "node scripts/pack-cli.mjs",
     "dev": "pnpm --filter @xuanyuku/cli build --watch"
   },
   "devDependencies": {
+    "esbuild": "^0.28.1",
     "typescript": "^5.7.0"
   }
 }
