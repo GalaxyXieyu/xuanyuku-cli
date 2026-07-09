@@ -47,8 +47,10 @@ execSync('npm pack --pack-destination ..', { cwd: stageDir, stdio: 'inherit' });
 rmSync(stageDir, { recursive: true, force: true });
 
 const tarball = readdirSync(outDir).find((f) => f.endsWith('.tgz'));
-// CDN 上传时同时复制一份 latest 别名,技能包里的安装命令固定指向 latest
-copyFileSync(join(outDir, tarball), join(outDir, 'xuanyuku-cli-latest.tgz'));
-console.log(`\n✓ 产物: dist-pack/${tarball} (+ xuanyuku-cli-latest.tgz)`);
-console.log('  上传至: https://cdn.xuanyuku.cn/cli/');
-console.log('  安装:   npm i -g https://cdn.xuanyuku.cn/cli/xuanyuku-cli-latest.tgz');
+// 产物同步到 releases/(随仓库分发,GitHub raw 直链下载);latest 别名供技能包固定引用
+const releasesDir = join(root, 'releases');
+mkdirSync(releasesDir, { recursive: true });
+copyFileSync(join(outDir, tarball), join(releasesDir, tarball));
+copyFileSync(join(outDir, tarball), join(releasesDir, 'xuanyuku-cli-latest.tgz'));
+console.log(`\n✓ 产物: releases/${tarball} (+ xuanyuku-cli-latest.tgz),commit + push 后即可下载`);
+console.log('  安装: npm i -g https://raw.githubusercontent.com/GalaxyXieyu/xuanyuku-cli/main/releases/xuanyuku-cli-latest.tgz');
