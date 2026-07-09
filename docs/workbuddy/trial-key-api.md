@@ -21,7 +21,10 @@ Authorization: Bearer <小程序用户 accessToken>
 
 1. 校验活动开关(见「活动配置」)。活动关闭 → `403 TRIAL_CLOSED`。
 2. 若该用户已有 `source=workbuddy-trial` 的**有效** Key → 先吊销旧 Key,再签发新 Key(用户丢了 Key 可以自助重领,且旧 Key 立即失效,不会越领越多)。
-3. 签发 Key(**必须绑定租户**:实测发现从无租户会话创建的 Key 调业务接口会报 "No tenant selected in access token",完全不可用。签发时取用户当前小程序会话的租户绑定进 Key;用户无租户时返回 `409 NO_TENANT` 并引导先完成开店/建档):
+3. 签发 Key(**必须绑定租户,且租户概念对用户完全隐身**):
+   - 实测:无租户绑定的 Key 调业务接口报 "No tenant selected in access token",完全不可用。
+   - 产品约定:一个用户只有一个组合(租户),签发时服务端自动取该用户唯一租户绑定进 Key。**前端与所有用户可见文案不出现"租户"字样**,不提供任何租户选择交互。
+   - 边界:用户无租户(未建档)→ `409 NOT_READY`,文案引导"请先完成建档";多租户账号(超管/历史 B 端,仅内部存在)→ 自动取 OWNER 角色的第一个,不阻断。
    - `name`: `AI宠物助理-限免`(固定,便于用户在 key 列表里辨认)
    - `source`: `workbuddy-trial`(新增字段或复用 metadata,用于埋点与批量运营)
    - `expiresAt`: `min(now + TRIAL_DAYS, 活动截止日)`
