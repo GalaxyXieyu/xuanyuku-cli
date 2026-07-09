@@ -8,26 +8,31 @@
 
 ## 接口定义
 
+> **渠道无关设计**:Key 签发本质是"给外部 AI 助理发凭证",WorkBuddy 只是第一个渠道(后续:openclaw 自部署、hosted 托管版等)。路由与数据模型渠道参数化,教程与文案才是渠道专属。
+
 ### 1. 领取 / 重新领取
 
 ```
-POST /trial/workbuddy/api-key
+POST /assistant-access/keys
 Authorization: Bearer <小程序用户 accessToken>
+Body: { "channel": "workbuddy" }
 ```
 
-请求体:无(所有策略由服务端活动配置决定,客户端不可传有效期/权限)。
+- `channel` 为服务端枚举,Phase 1 仅开放 `workbuddy`,未知渠道 → `400 UNKNOWN_CHANNEL`。
+- 除 channel 外客户端不可传任何参数(有效期/权限均由服务端渠道配置决定)。
+- 重领语义按 (user, channel) 隔离。
 
 行为(幂等语义 = 重新领取):
 
 1. 校验活动开关(见「活动配置」)。活动关闭 → `403 TRIAL_CLOSED`。
-2. 若该用户已有 `source=workbuddy-trial` 的**有效** Key → 先吊销旧 Key,再签发新 Key(用户丢了 Key 可以自助重领,且旧 Key 立即失效,不会越领越多)。
+2. 若该用户在该 channel 已有(`source=trial:{channel}`)**有效** Key → 先吊销旧 Key,再签发新 Key(用户丢了 Key 可以自助重领,且旧 Key 立即失效,不会越领越多)。
 3. 签发 Key(**必须绑定租户,且租户概念对用户完全隐身**):
    - 实测:无租户绑定的 Key 调业务接口报 "No tenant selected in access token",完全不可用。
    - 产品约定:一个用户只有一个组合(租户),签发时服务端自动取该用户唯一租户绑定进 Key。**前端与所有用户可见文案不出现"租户"字样**,不提供任何租户选择交互。
    - 边界:用户无租户(未建档)→ `409 NOT_READY`,文案引导"请先完成建档";多租户账号(超管/历史 B 端,仅内部存在)→ 自动取 OWNER 角色的第一个,不阻断。
    - `name`: `AI宠物助理-限免`(固定,便于用户在 key 列表里辨认)
-   - `source`: `workbuddy-trial`(新增字段或复用 metadata,用于埋点与批量运营)
-   - `expiresAt`: `min(now + TRIAL_DAYS, 活动截止日)`
+   - `source`: `trial:{channel}`(ApiKey 表新增 source 字段,埋点天然按渠道分维度)
+   - `expiresAt`: `min(now + 渠道配置 trialDays, 渠道配置 endAt)`
    - `scopes`: 见「权限收敛」(apikeys 表已有 `scopes` 字段,当前为 null=全量,本渠道必须收敛)
 4. 返回明文 Key(仅此一次)。
 
@@ -45,7 +50,7 @@ Authorization: Bearer <小程序用户 accessToken>
 ### 2. 领取状态查询(落地页渲染用)
 
 ```
-GET /trial/workbuddy/api-key/status
+GET /assistant-access/keys/status?channel=workbuddy
 ```
 
 ```json
@@ -86,22 +91,26 @@ trial Key 存在用户电脑上、由 agent 自主调用,必须排除高危与�
 ## 限流与埋点
 
 - 每 Key 限流:建议 60 req/min、5000 req/day(日报场景一次任务约 5~20 个请求,余量充足)。
-- 埋点:按 `source=workbuddy-trial` 维度出:领取数、激活数(首次调用)、7 日活跃、命令分布。这是判断该渠道是否值得做 Phase 2 托管版的唯一依据。
+- 埋点:按 `source=trial:{channel}` 维度出:领取数、激活数(首次调用)、7 日活跃、命令分布。这是判断该渠道是否值得做 Phase 2 托管版的唯一依据。
 
 ## 活动配置(服务端可调,不发版)
 
-| 配置项 | 建议初值 |
+按渠道一行的配置表 `AssistantChannelConfig`(id = channel slug,照 MiniappSupportConfig 单行范式):
+
+| 字段 | workbuddy 初值 |
 |---|---|
-| `TRIAL_OPEN` | true |
-| `TRIAL_DAYS` | 30 |
-| `TRIAL_END_AT` | 活动截止日 |
-| `RATE_LIMIT` | 60/min, 5000/day |
+| `enabled` | true |
+| `trialDays` | 30 |
+| `endAt` | 活动截止日 |
+| `rateLimit` | 60/min, 5000/day |
+
+后续新渠道(openclaw / hosted 等)= 配置表加一行 + 枚举放开,后端逻辑零改动。
 
 活动结束的收口动作:关开关(新领取关闭)→ 到期 Key 自然失效 → 需要时按 `source` 批量吊销。转付费用户走续期/换正式 Key。
 
 ## 小程序端交互(前端参照)
 
 1. 落地页(入口:首页 banner +「我的-工具」)→ 「限时免费领取」按钮
-2. 调 `POST /trial/workbuddy/api-key` → 弹层展示 Key + 一键复制 + 「已领取过将使旧 Key 失效」提示
+2. 调 `POST /assistant-access/keys`(channel=workbuddy) → 弹层展示 Key + 一键复制 + 「已领取过将使旧 Key 失效」提示
 3. 同屏给出:技能包下载短链/二维码 + 两步教程(装 WorkBuddy → 导入技能后说"帮我接入蛋龟选育库,Key 是 xxx")
 4. 已领取状态下按钮变为「查看状态 / 重新领取」
