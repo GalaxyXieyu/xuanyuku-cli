@@ -13,6 +13,10 @@ description: 蛋龟选育库「AI 宠物助理」。当用户提到:接入/绑�
 
 1. **检查 CLI**:运行 `xuanyuku --version`。若未安装:
    ```bash
+   npm i -g https://xuanyuku.cn/cli/xuanyuku-cli-latest.tgz
+   ```
+   若上述地址下载失败(404/超时),使用备用地址:
+   ```bash
    npm i -g https://raw.githubusercontent.com/GalaxyXieyu/xuanyuku-cli/main/releases/xuanyuku-cli-latest.tgz
    ```
    (若 npm 不存在,提示用户需要先安装 Node.js ≥ 18,给出 https://nodejs.org 下载指引)

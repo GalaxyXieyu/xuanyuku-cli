@@ -3,7 +3,7 @@
 // 产物: dist-pack/xuanyuku-cli-<version>.tgz,安装方式: npm i -g <tarball URL>
 import { build } from 'esbuild';
 import { execSync } from 'node:child_process';
-import { mkdirSync, rmSync, writeFileSync, readFileSync, copyFileSync, readdirSync } from 'node:fs';
+import { mkdirSync, rmSync, writeFileSync, readFileSync, copyFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -52,5 +52,15 @@ const releasesDir = join(root, 'releases');
 mkdirSync(releasesDir, { recursive: true });
 copyFileSync(join(outDir, tarball), join(releasesDir, tarball));
 copyFileSync(join(outDir, tarball), join(releasesDir, 'xuanyuku-cli-latest.tgz'));
+// 若主站仓库在本机,同步到 apps/web/public/cli/(部署后从 https://xuanyuku.cn/cli/ 下载)
+const webPublicCli = join(root, '../Eggturtle-breeding-library/apps/web/public/cli');
+if (existsSync(dirname(webPublicCli))) {
+  mkdirSync(webPublicCli, { recursive: true });
+  copyFileSync(join(outDir, tarball), join(webPublicCli, tarball));
+  copyFileSync(join(outDir, tarball), join(webPublicCli, 'xuanyuku-cli-latest.tgz'));
+  console.log('✓ 已同步主站 apps/web/public/cli/(需 commit + 部署主站生效)');
+}
+
 console.log(`\n✓ 产物: releases/${tarball} (+ xuanyuku-cli-latest.tgz),commit + push 后即可下载`);
-console.log('  安装: npm i -g https://raw.githubusercontent.com/GalaxyXieyu/xuanyuku-cli/main/releases/xuanyuku-cli-latest.tgz');
+console.log('  主地址: npm i -g https://xuanyuku.cn/cli/xuanyuku-cli-latest.tgz(需主站已部署)');
+console.log('  备地址: npm i -g https://raw.githubusercontent.com/GalaxyXieyu/xuanyuku-cli/main/releases/xuanyuku-cli-latest.tgz');
