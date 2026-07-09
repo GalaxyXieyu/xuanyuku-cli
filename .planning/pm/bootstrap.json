@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-07-09T16:10:11+08:00",
+  "project": {
+    "name": "蛋龟选育库",
+    "repo_root": "/Volumes/DATABASE/code/business/xuanyuku-cli",
+    "config_path": "/Volumes/DATABASE/code/business/xuanyuku-cli/.planning/pm/pm.json",
+    "tasklist_name": "蛋龟选育库",
+    "tasklist_guid": "98aa93cd-88ff-4562-ba96-92887ccbc6cb",
+    "task_prefix": "T",
+    "kind": "task",
+    "task_backend": "feishu",
+    "doc_backend": "repo"
+  },
+  "bootstrap": {
+    "project_mode": "brownfield",
+    "recommended_action": "map-codebase",
+    "task_backend": "feishu",
+    "doc_backend": "repo",
+    "doc_folder_name": ".planning",
+    "doc_folder_token": "",
+    "doc_folder_url": "repo://.planning",
+    "project_doc_token": "repo:.planning/PROJECT.md",
+    "project_doc_url": "repo://.planning/PROJECT.md",
+    "requirements_doc_token": "repo:.planning/REQUIREMENTS.md",
+    "requirements_doc_url": "repo://.planning/REQUIREMENTS.md",
+    "roadmap_doc_token": "repo:.planning/ROADMAP.md",
+    "roadmap_doc_url": "repo://.planning/ROADMAP.md",
+    "state_doc_token": "repo:.planning/STATE.md",
+    "state_doc_url": "repo://.planning/STATE.md",
+    "notes": [
+      "brownfield 项目优先做 map-codebase，再补项目/路线图/状态文档。",
+      "greenfield 项目优先做 new-project，再进入任务拆解。",
+      "当前 task backend=feishu，doc backend=repo。"
+    ]
+  }
+}

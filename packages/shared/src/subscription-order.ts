@@ -1,0 +1,129 @@
+import { z } from 'zod';
+
+import {
+  payableTenantSubscriptionPlanSchema,
+  subscriptionDurationDaysSchema,
+} from './subscription-catalog';
+import { subscriptionDiscountStatusSchema } from './subscription-pricing';
+
+export const subscriptionOrderStatusSchema = z.enum([
+  'PENDING',
+  'PAID',
+  'CANCELLED',
+  'REFUNDED',
+  'EXPIRED',
+]);
+export const subscriptionOrderPaymentProviderSchema = z.enum(['WECHAT', 'ALIPAY']);
+export const subscriptionOrderPaymentChannelSchema = z.enum(['JSAPI', 'MINIAPP', 'H5']);
+export const subscriptionOrderFulfillmentModeSchema = z.enum(['IMMEDIATE', 'DEFERRED']);
+export const subscriptionOrderBehaviorEventSchema = z.enum([
+  'DIALOG_OPEN',
+  'PAY_CLICK',
+  'PAY_CANCEL',
+  'PAY_SUCCESS',
+  'PAY_FAILURE',
+  'PAY_HESITATE',
+]);
+
+export const subscriptionOrderWechatJsapiParamsSchema = z.object({
+  appId: z.string().min(1),
+  timeStamp: z.string().min(1),
+  nonceStr: z.string().min(1),
+  package: z.string().min(1),
+  signType: z.literal('RSA'),
+  paySign: z.string().min(1),
+});
+
+export const subscriptionOrderSchema = z.object({
+  orderId: z.string().min(1),
+  orderNo: z.string().min(1),
+  tenantId: z.string().min(1),
+  userId: z.string().min(1),
+  plan: payableTenantSubscriptionPlanSchema,
+  durationDays: subscriptionDurationDaysSchema,
+  listPriceCents: z.number().int().positive().nullable(),
+  totalAmountCents: z.number().int().positive(),
+  pricingPayRateBps: z.number().int().min(1).max(10000).nullable(),
+  pricingStartsAt: z.string().datetime().nullable(),
+  pricingEndsAt: z.string().datetime().nullable(),
+  pricingDiscountStatus: subscriptionDiscountStatusSchema,
+  currency: z.string().trim().length(3),
+  paymentProvider: subscriptionOrderPaymentProviderSchema,
+  paymentChannel: subscriptionOrderPaymentChannelSchema,
+  paymentId: z.string().min(1).nullable(),
+  paymentPrepayId: z.string().min(1).nullable(),
+  status: subscriptionOrderStatusSchema,
+  statusReason: z.string().nullable(),
+  fulfillmentMode: subscriptionOrderFulfillmentModeSchema,
+  effectiveStartsAt: z.string().datetime(),
+  createdAt: z.string().datetime(),
+  paidAt: z.string().datetime().nullable(),
+  cancelledAt: z.string().datetime().nullable(),
+  expiresAt: z.string().datetime(),
+  appliedAt: z.string().datetime().nullable(),
+});
+
+export const createSubscriptionOrderRequestSchema = z.object({
+  plan: payableTenantSubscriptionPlanSchema,
+  durationDays: subscriptionDurationDaysSchema,
+  paymentChannel: subscriptionOrderPaymentChannelSchema.default('JSAPI'),
+});
+
+export const createSubscriptionOrderResponseSchema = z.object({
+  order: subscriptionOrderSchema,
+  jsapiParams: subscriptionOrderWechatJsapiParamsSchema,
+});
+
+export const getSubscriptionOrderResponseSchema = z.object({
+  order: subscriptionOrderSchema,
+});
+
+export const cancelSubscriptionOrderResponseSchema = z.object({
+  order: subscriptionOrderSchema,
+});
+
+export const trackSubscriptionOrderBehaviorRequestSchema = z.object({
+  event: subscriptionOrderBehaviorEventSchema,
+  sourcePath: z.string().trim().min(1).max(255),
+  plan: payableTenantSubscriptionPlanSchema.optional(),
+  durationDays: subscriptionDurationDaysSchema.optional(),
+  orderNo: z.string().trim().min(1).max(80).optional(),
+  entryPoint: z.string().trim().min(1).max(64).optional(),
+  stayDurationMs: z.number().int().min(0).max(24 * 60 * 60 * 1000).optional(),
+  reason: z.string().trim().min(1).max(120).optional(),
+  result: z.string().trim().min(1).max(255).optional(),
+});
+
+export const trackSubscriptionOrderBehaviorResponseSchema = z.object({
+  recorded: z.literal(true),
+});
+
+export type SubscriptionOrderStatus = z.infer<typeof subscriptionOrderStatusSchema>;
+export type SubscriptionOrderPaymentProvider = z.infer<
+  typeof subscriptionOrderPaymentProviderSchema
+>;
+export type SubscriptionOrderPaymentChannel = z.infer<
+  typeof subscriptionOrderPaymentChannelSchema
+>;
+export type SubscriptionOrderFulfillmentMode = z.infer<
+  typeof subscriptionOrderFulfillmentModeSchema
+>;
+export type SubscriptionOrderBehaviorEvent = z.infer<typeof subscriptionOrderBehaviorEventSchema>;
+export type SubscriptionOrderWechatJsapiParams = z.infer<
+  typeof subscriptionOrderWechatJsapiParamsSchema
+>;
+export type SubscriptionOrder = z.infer<typeof subscriptionOrderSchema>;
+export type CreateSubscriptionOrderRequest = z.infer<typeof createSubscriptionOrderRequestSchema>;
+export type CreateSubscriptionOrderResponse = z.infer<
+  typeof createSubscriptionOrderResponseSchema
+>;
+export type GetSubscriptionOrderResponse = z.infer<typeof getSubscriptionOrderResponseSchema>;
+export type CancelSubscriptionOrderResponse = z.infer<
+  typeof cancelSubscriptionOrderResponseSchema
+>;
+export type TrackSubscriptionOrderBehaviorRequest = z.infer<
+  typeof trackSubscriptionOrderBehaviorRequestSchema
+>;
+export type TrackSubscriptionOrderBehaviorResponse = z.infer<
+  typeof trackSubscriptionOrderBehaviorResponseSchema
+>;

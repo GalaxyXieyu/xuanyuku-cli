@@ -1,0 +1,66 @@
+{
+  "project": {
+    "name": "蛋龟选育库"
+  },
+  "repo_root": "/Volumes/DATABASE/code/business/xuanyuku-cli",
+  "task": {
+    "backend": "feishu",
+    "tasklist_name": "蛋龟选育库",
+    "prefix": "T",
+    "kind": "task",
+    "tasklist_guid": "98aa93cd-88ff-4562-ba96-92887ccbc6cb",
+    "tasklist_url": "https://applink.feishu.cn/client/todo/task_list?guid=98aa93cd-88ff-4562-ba96-92887ccbc6cb",
+    "default_assignee": "ou_1356b97a4de83cfe7903347e04fcfd43"
+  },
+  "doc": {
+    "backend": "repo",
+    "folder_name": ".planning",
+    "project_title": "PROJECT",
+    "requirements_title": "REQUIREMENTS",
+    "roadmap_title": "ROADMAP",
+    "state_title": "STATE",
+    "dry_run": false,
+    "folder_token": "",
+    "folder_url": "repo://.planning",
+    "folder_created": false,
+    "folder_status": "adopted",
+    "project": "PROJECT",
+    "requirements": "REQUIREMENTS",
+    "roadmap": "ROADMAP",
+    "state": "STATE",
+    "project_doc_token": "repo:.planning/PROJECT.md",
+    "requirements_doc_token": "repo:.planning/REQUIREMENTS.md",
+    "roadmap_doc_token": "repo:.planning/ROADMAP.md",
+    "state_doc_token": "repo:.planning/STATE.md",
+    "project_doc_url": "repo://.planning/PROJECT.md",
+    "requirements_doc_url": "repo://.planning/REQUIREMENTS.md",
+    "roadmap_doc_url": "repo://.planning/ROADMAP.md",
+    "state_doc_url": "repo://.planning/STATE.md",
+    "project_doc_status": "created",
+    "requirements_doc_status": "created",
+    "roadmap_doc_status": "created",
+    "state_doc_status": "created"
+  },
+  "feishu": {
+    "provider": "lark-cli",
+    "cli_profile": "",
+    "as": "user"
+  },
+  "coder": {
+    "backend": "acp",
+    "agent_id": "codex",
+    "timeout": 900,
+    "thinking": "high",
+    "session_key": "main"
+  },
+  "tasklist_name": "蛋龟选育库",
+  "task_prefix": "T",
+  "kind": "task",
+  "description_requirements": [
+    "以 task/doc 为主，不再依赖本地 task/context/state 文件。",
+    "进度默认写评论，验收证据优先回填附件或评论。"
+  ],
+  "repo": {
+    "root": "/Volumes/DATABASE/code/business/xuanyuku-cli"
+  }
+}

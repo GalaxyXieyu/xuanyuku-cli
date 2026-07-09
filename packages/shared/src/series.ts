@@ -1,0 +1,93 @@
+import { z } from 'zod';
+
+export const seriesNameSchema = z.string().trim().min(1).max(120);
+
+const seriesDescriptionSchema = z.string().trim().max(5000).nullable().optional();
+
+export const seriesSummarySchema = z.object({
+  id: z.string().min(1),
+  tenantId: z.string().min(1),
+  name: seriesNameSchema,
+  sortOrder: z.number().int(),
+  isActive: z.boolean(),
+  isPublicVisible: z.boolean(),
+  productCount: z.number().int().nonnegative().default(0),
+});
+
+export const seriesSchema = seriesSummarySchema.extend({
+  description: z.string().nullable(),
+  coverImageUrl: z.string().nullable().optional(),
+  createdAt: z.string().datetime(),
+  updatedAt: z.string().datetime(),
+});
+
+export const listSeriesQuerySchema = z.object({
+  search: z.string().trim().min(1).max(120).optional(),
+  page: z.coerce.number().int().min(1).default(1),
+  pageSize: z.coerce.number().int().min(1).max(100).default(20),
+});
+
+export const listSeriesResponseSchema = z.object({
+  items: z.array(seriesSchema),
+  total: z.number().int().nonnegative(),
+  page: z.number().int().min(1),
+  pageSize: z.number().int().min(1),
+  totalPages: z.number().int().min(1),
+});
+
+export const getSeriesResponseSchema = z.object({
+  series: seriesSchema,
+});
+
+export const createSeriesRequestSchema = z.object({
+  name: seriesNameSchema,
+  description: seriesDescriptionSchema,
+  sortOrder: z.number().int().optional(),
+  isActive: z.boolean().optional(),
+  isPublicVisible: z.boolean().optional(),
+});
+
+export const createSeriesResponseSchema = z.object({
+  series: seriesSchema,
+});
+
+export const updateSeriesRequestSchema = z
+  .object({
+    name: seriesNameSchema.optional(),
+    description: seriesDescriptionSchema,
+    isActive: z.boolean().optional(),
+    isPublicVisible: z.boolean().optional(),
+    sortOrder: z.number().int().optional(),
+  })
+  .refine((payload) => Object.keys(payload).length > 0, {
+    message: 'At least one field must be provided for update.',
+  });
+
+export const updateSeriesResponseSchema = z.object({
+  series: seriesSchema,
+});
+
+export const reorderSeriesRequestSchema = z.object({
+  ids: z.array(z.string().trim().min(1)).min(1),
+});
+
+export const reorderSeriesResponseSchema = z.object({
+  items: z.array(seriesSchema),
+});
+
+export const deleteSeriesResponseSchema = z.object({
+  deleted: z.literal(true),
+  seriesId: z.string().min(1),
+});
+
+export type Series = z.infer<typeof seriesSchema>;
+export type SeriesSummary = z.infer<typeof seriesSummarySchema>;
+export type ListSeriesQuery = z.infer<typeof listSeriesQuerySchema>;
+export type ListSeriesResponse = z.infer<typeof listSeriesResponseSchema>;
+export type CreateSeriesRequest = z.infer<typeof createSeriesRequestSchema>;
+export type UpdateSeriesRequest = z.infer<typeof updateSeriesRequestSchema>;
+export type CreateSeriesResponse = z.infer<typeof createSeriesResponseSchema>;
+export type UpdateSeriesResponse = z.infer<typeof updateSeriesResponseSchema>;
+export type ReorderSeriesRequest = z.infer<typeof reorderSeriesRequestSchema>;
+export type ReorderSeriesResponse = z.infer<typeof reorderSeriesResponseSchema>;
+export type DeleteSeriesResponse = z.infer<typeof deleteSeriesResponseSchema>;

@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-07-09T15:52:47+08:00",
+  "project": {
+    "name": "蛋龟选育库",
+    "repo_root": "/Volumes/DATABASE/code/business/xuanyuku-cli",
+    "config_path": "/Volumes/DATABASE/code/business/xuanyuku-cli/.planning/pm/pm.json",
+    "tasklist_name": "蛋龟选育库",
+    "tasklist_guid": "98aa93cd-88ff-4562-ba96-92887ccbc6cb",
+    "task_prefix": "T",
+    "kind": "task",
+    "task_backend": "feishu",
+    "doc_backend": "repo"
+  },
+  "repo_scan": {
+    "root": "/Volumes/DATABASE/code/business/xuanyuku-cli",
+    "exists": true,
+    "name": "xuanyuku-cli",
+    "markers": {
+      "git": true,
+      "package_json": true,
+      "pnpm_lock": true,
+      "yarn_lock": false,
+      "npm_lock": false,
+      "pyproject": false,
+      "requirements_txt": false,
+      "go_mod": false,
+      "cargo_toml": false,
+      "miniapp_app_json": false,
+      "miniapp_project_config": false,
+      "src_dir": false,
+      "pages_dir": false,
+      "components_dir": false
+    },
+    "package_manager": "pnpm",
+    "framework_hints": []
+  },
+  "bootstrap": {
+    "project_mode": "brownfield",
+    "recommended_action": "map-codebase",
+    "task_backend": "feishu",
+    "doc_backend": "repo",
+    "doc_folder_name": ".planning",
+    "doc_folder_token": "",
+    "doc_folder_url": "repo://.planning",
+    "project_doc_token": "repo:.planning/PROJECT.md",
+    "project_doc_url": "repo://.planning/PROJECT.md",
+    "requirements_doc_token": "repo:.planning/REQUIREMENTS.md",
+    "requirements_doc_url": "repo://.planning/REQUIREMENTS.md",
+    "roadmap_doc_token": "repo:.planning/ROADMAP.md",
+    "roadmap_doc_url": "repo://.planning/ROADMAP.md",
+    "state_doc_token": "repo:.planning/STATE.md",
+    "state_doc_url": "repo://.planning/STATE.md",
+    "notes": [
+      "brownfield 项目优先做 map-codebase，再补项目/路线图/状态文档。",
+      "greenfield 项目优先做 new-project，再进入任务拆解。",
+      "当前 task backend=feishu，doc backend=repo。"
+    ]
+  },
+  "current_task": {
+    "task_id": "T478",
+    "summary": "[T478] xuanyuku-cli 适配认证安全加固：API Key 优先+refresh token+429/锁定错误处理（先产出改造计划）",
+    "status": "todo",
+    "guid": "8ca74a79-4585-43d6-98b6-e31d7a8a9f9a",
+    "url": "https://applink.feishu.cn/client/todo/detail?guid=8ca74a79-4585-43d6-98b6-e31d7a8a9f9a&suite_entity_num=t100688",
+    "description": "任务编号：T478\n创建时间：2026-07-09 15:39:50 CST\n类型：miniapp-adaptation\nRepo：/Volumes/DATABASE/code/business/Eggturtle-breeding-library\n\n需求：\nP0-P3 认证加固已上线（限流/锁定/refresh token 轮换/API Key/密码策略）。独立 CLI 仓库 /Volumes/DATABASE/code/business/xuanyuku-cli 需要适配：调研现有认证与请求链路，产出改造计划文档，随后按计划实施。\n\n执行要求：\n- 以 task/doc 为主，不再依赖本地 task/context/state 文件。\n- 进度默认写评论，验收证据优先回填附件或评论。",
+    "updated_at": "1783582918991",
+    "completed_at": "0",
+    "attachments": [],
+    "tasklists": [
+      {
+        "section_guid": "b05f5485-c454-f6ad-4434-ba51d8f3d21c",
+        "tasklist_guid": "98aa93cd-88ff-4562-ba96-92887ccbc6cb"
+      }
+    ]
+  },
+  "next_task": {
+    "task_id": "T385",
+    "summary": "[T385] 全局小宠物 UI（浮窗+轮播+拖拽+对话 sheet）",
+    "status": "todo",
+    "guid": "4c2d55b0-3f3d-48f3-a248-9e2f72f76659",
+    "url": "https://applink.feishu.cn/client/todo/detail?guid=4c2d55b0-3f3d-48f3-a248-9e2f72f76659&suite_entity_num=t100522",
+    "updated_at": "1783583350474",
+    "created_at": "1782089273069"
+  },
+  "recent_comments": [],
+  "inputs": {
+    "config": "/Volumes/DATABASE/code/business/xuanyuku-cli/.planning/pm/pm.json",
+    "context_path": "/Volumes/DATABASE/code/business/xuanyuku-cli/.planning/pm/current-context.json",
+    "bootstrap_path": "/Volumes/DATABASE/code/business/xuanyuku-cli/.planning/pm/bootstrap.json",
+    "plan_path": "/Volumes/DATABASE/code/business/xuanyuku-cli/.planning/pm/plan-context.json",
+    "refine_path": "/Volumes/DATABASE/code/business/xuanyuku-cli/.planning/pm/refine-context.json"
+  },
+  "recommended_flow": [
+    "Run brownfield mapping before broad code changes; build task/doc understanding first.",
+    "Implement the current task first and update progress through pm when done."
+  ],
+  "required_reads": [
+    ".planning/pm/pm.json",
+    ".planning/pm/current-context.json",
+    ".planning/pm/bootstrap.json"
+  ],
+  "handoff_contract": {
+    "active_task_source": "current_task",
+    "active_task_id": "T478",
+    "active_task_summary": "[T478] xuanyuku-cli 适配认证安全加固：API Key 优先+refresh token+429/锁定错误处理（先产出改造计划）",
+    "task_description_present": true,
+    "required_reads": [
+      ".planning/pm/pm.json",
+      ".planning/pm/current-context.json",
+      ".planning/pm/bootstrap.json"
+    ],
+    "source_of_truth": [
+      ".planning/pm/pm.json and .planning/pm/coder-context.json define runtime/config context.",
+      "current_task description is the execution index card."
+    ]
+  },
+  "source_of_truth": [
+    ".planning/pm/pm.json and .planning/pm/coder-context.json define runtime/config context.",
+    "current_task description is the execution index card."
+  ]
+}

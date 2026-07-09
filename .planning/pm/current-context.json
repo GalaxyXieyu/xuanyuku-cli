@@ -1,0 +1,281 @@
+{
+  "generated_at": "2026-07-09T16:10:11+08:00",
+  "project": {
+    "name": "蛋龟选育库",
+    "repo_root": "/Volumes/DATABASE/code/business/xuanyuku-cli",
+    "config_path": "/Volumes/DATABASE/code/business/xuanyuku-cli/.planning/pm/pm.json",
+    "tasklist_name": "蛋龟选育库",
+    "tasklist_guid": "98aa93cd-88ff-4562-ba96-92887ccbc6cb",
+    "task_prefix": "T",
+    "kind": "task",
+    "task_backend": "feishu",
+    "doc_backend": "repo"
+  },
+  "repo_scan": {
+    "root": "/Volumes/DATABASE/code/business/xuanyuku-cli",
+    "exists": true,
+    "name": "xuanyuku-cli",
+    "markers": {
+      "git": true,
+      "package_json": true,
+      "pnpm_lock": true,
+      "yarn_lock": false,
+      "npm_lock": false,
+      "pyproject": false,
+      "requirements_txt": false,
+      "go_mod": false,
+      "cargo_toml": false,
+      "miniapp_app_json": false,
+      "miniapp_project_config": false,
+      "src_dir": false,
+      "pages_dir": false,
+      "components_dir": false
+    },
+    "package_manager": "pnpm",
+    "framework_hints": []
+  },
+  "bootstrap": {
+    "project_mode": "brownfield",
+    "recommended_action": "map-codebase",
+    "task_backend": "feishu",
+    "doc_backend": "repo",
+    "doc_folder_name": ".planning",
+    "doc_folder_token": "",
+    "doc_folder_url": "repo://.planning",
+    "project_doc_token": "repo:.planning/PROJECT.md",
+    "project_doc_url": "repo://.planning/PROJECT.md",
+    "requirements_doc_token": "repo:.planning/REQUIREMENTS.md",
+    "requirements_doc_url": "repo://.planning/REQUIREMENTS.md",
+    "roadmap_doc_token": "repo:.planning/ROADMAP.md",
+    "roadmap_doc_url": "repo://.planning/ROADMAP.md",
+    "state_doc_token": "repo:.planning/STATE.md",
+    "state_doc_url": "repo://.planning/STATE.md",
+    "notes": [
+      "brownfield 项目优先做 map-codebase，再补项目/路线图/状态文档。",
+      "greenfield 项目优先做 new-project，再进入任务拆解。",
+      "当前 task backend=feishu，doc backend=repo。"
+    ]
+  },
+  "doc_index": {
+    "folder_name": ".planning",
+    "folder_token": "",
+    "folder_url": "repo://.planning",
+    "project_doc_token": "repo:.planning/PROJECT.md",
+    "project_doc_url": "repo://.planning/PROJECT.md",
+    "requirements_doc_token": "repo:.planning/REQUIREMENTS.md",
+    "requirements_doc_url": "repo://.planning/REQUIREMENTS.md",
+    "roadmap_doc_token": "repo:.planning/ROADMAP.md",
+    "roadmap_doc_url": "repo://.planning/ROADMAP.md",
+    "state_doc_token": "repo:.planning/STATE.md",
+    "state_doc_url": "repo://.planning/STATE.md"
+  },
+  "open_tasks": [
+    {
+      "task_id": "T385",
+      "summary": "[T385] 全局小宠物 UI（浮窗+轮播+拖拽+对话 sheet）",
+      "status": "todo",
+      "guid": "4c2d55b0-3f3d-48f3-a248-9e2f72f76659",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=4c2d55b0-3f3d-48f3-a248-9e2f72f76659&suite_entity_num=t100522",
+      "updated_at": "1783583350474",
+      "created_at": "1782089273069"
+    },
+    {
+      "task_id": "T386",
+      "summary": "[T386] 乌龟诊断场景（症状+图片+诊断模板+历史）",
+      "status": "todo",
+      "guid": "998ce87e-fc78-4b30-a299-b70961055a0b",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=998ce87e-fc78-4b30-a299-b70961055a0b&suite_entity_num=t100523",
+      "updated_at": "1783583348167",
+      "created_at": "1782089297912"
+    },
+    {
+      "task_id": "T393",
+      "summary": "[T393] GraphRAG Wave 3：小程序问诊 UI 接入与安全 guardrail",
+      "status": "todo",
+      "guid": "1a97363c-130b-4326-9633-7fd3b58abfb8",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=1a97363c-130b-4326-9633-7fd3b58abfb8&suite_entity_num=t100530",
+      "updated_at": "1782316065905",
+      "created_at": "1782316065883"
+    },
+    {
+      "task_id": "T393",
+      "summary": "[T393] GraphRAG Wave 2：图片资产化与多模态 evidence 检索",
+      "status": "todo",
+      "guid": "cefc365b-86c5-4335-8b96-ca4f3a0368a3",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=cefc365b-86c5-4335-8b96-ca4f3a0368a3&suite_entity_num=t100532",
+      "updated_at": "1783132035959",
+      "created_at": "1782316066280"
+    },
+    {
+      "task_id": "T393",
+      "summary": "[T393] GraphRAG Wave 1：NestJS ai-diagnosis 中转与积分会话集成",
+      "status": "todo",
+      "guid": "8ae697f6-a899-4b61-981f-cc30f1e56e84",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=8ae697f6-a899-4b61-981f-cc30f1e56e84&suite_entity_num=t100533",
+      "updated_at": "1782983629786",
+      "created_at": "1782316066343"
+    },
+    {
+      "task_id": "T397",
+      "summary": "[T397] 优化 auto-miniprogram MCP 调试工具（IDE端口/热重载/日志捕获/RootPortal可见性）",
+      "status": "todo",
+      "guid": "5677c342-9143-4fe8-8ed7-a23b8cf6d360",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=5677c342-9143-4fe8-8ed7-a23b8cf6d360&suite_entity_num=t100549",
+      "updated_at": "1782574433555",
+      "created_at": "1782573844005"
+    },
+    {
+      "task_id": "T408",
+      "summary": "[T408] AI兽医问答/诊断页样式与渲染打磨",
+      "status": "todo",
+      "guid": "1351f6c2-2d2f-47f5-8e74-029d9e9f2903",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=1351f6c2-2d2f-47f5-8e74-029d9e9f2903&suite_entity_num=t100592",
+      "updated_at": "1782977879117",
+      "created_at": "1782955137672"
+    },
+    {
+      "task_id": "T415",
+      "summary": "[T415] supply商品域样式硬编码色值与地址卡片重复实现整理",
+      "status": "todo",
+      "guid": "9e8968ea-b70f-48db-8d75-8a01a8a51fad",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=9e8968ea-b70f-48db-8d75-8a01a8a51fad&suite_entity_num=t100600",
+      "updated_at": "1783131060710",
+      "created_at": "1783131060671"
+    },
+    {
+      "task_id": "T416",
+      "summary": "[T416] 收货地址管理页缺少删除能力",
+      "status": "todo",
+      "guid": "01cbee09-74fe-4429-bb52-09c6a666c654",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=01cbee09-74fe-4429-bb52-09c6a666c654&suite_entity_num=t100601",
+      "updated_at": "1783131086134",
+      "created_at": "1783131086094"
+    },
+    {
+      "task_id": "T417",
+      "summary": "[T417] 商品订单退款申请入口在前端缺失",
+      "status": "todo",
+      "guid": "3690eafd-f209-482e-b951-ee566912056c",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=3690eafd-f209-482e-b951-ee566912056c&suite_entity_num=t100602",
+      "updated_at": "1783131111993",
+      "created_at": "1783131111950"
+    },
+    {
+      "task_id": "T419",
+      "summary": "[T419] GraphRAG(apps/rag)服务容器化与K8s自动部署接入",
+      "status": "todo",
+      "guid": "5fd7f938-f80d-4d62-884c-52b2fb14b68f",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=5fd7f938-f80d-4d62-884c-52b2fb14b68f&suite_entity_num=t100604",
+      "updated_at": "1783133269698",
+      "created_at": "1783132237862"
+    },
+    {
+      "task_id": "T422",
+      "summary": "[T422] 用TS原生embedding检索替代GraphRAG Python服务",
+      "status": "todo",
+      "guid": "4c6f7efd-b734-49d5-b5a0-c3ddbbbe5a94",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=4c6f7efd-b734-49d5-b5a0-c3ddbbbe5a94&suite_entity_num=t100607",
+      "updated_at": "1783134743747",
+      "created_at": "1783133835763"
+    },
+    {
+      "task_id": "T424",
+      "summary": "[T424] 龟圈页面风格扁平化改版：三tab与底部导航去色块、列表卡片改分割线信息流",
+      "status": "todo",
+      "guid": "0e4f1fc2-21cb-483a-96d7-bca5889339b4",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=0e4f1fc2-21cb-483a-96d7-bca5889339b4&suite_entity_num=t100609",
+      "updated_at": "1783153945531",
+      "created_at": "1783141050664"
+    },
+    {
+      "task_id": "T425",
+      "summary": "[T425] 小龟问答对话界面重新设计(复刻AiAssistantModal参考实现)",
+      "status": "todo",
+      "guid": "633fd5d7-9f3e-4122-9317-46296247d05c",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=633fd5d7-9f3e-4122-9317-46296247d05c&suite_entity_num=t100610",
+      "updated_at": "1783156778220",
+      "created_at": "1783152895504"
+    },
+    {
+      "task_id": "T427",
+      "summary": "[T427] 龟圈交流 feed 列表预览增加提及龟卡片(数量+可点击跳转档案)",
+      "status": "todo",
+      "guid": "1cff70d4-5897-4b18-b1d0-4ae3cbc4ac5c",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=1cff70d4-5897-4b18-b1d0-4ae3cbc4ac5c&suite_entity_num=t100612",
+      "updated_at": "1783158501822",
+      "created_at": "1783158501782"
+    },
+    {
+      "task_id": "T429",
+      "summary": "[T429] ai-chat 域分包异步化：native-vendor/tdesign + 聊天代码移入 pet 分包（componentPlaceholder 跨包引用），为主包腾出 ~90K",
+      "status": "todo",
+      "guid": "c71fccd9-ede5-4434-8289-831858ae4d14",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=c71fccd9-ede5-4434-8289-831858ae4d14&suite_entity_num=t100614",
+      "updated_at": "1783173369973",
+      "created_at": "1783173369934"
+    },
+    {
+      "task_id": "T430",
+      "summary": "[T430] 龟圈「我的帖子」空态与「补给」加载中状态页面居中",
+      "status": "todo",
+      "guid": "c339a407-51a6-4ede-87f8-1b88b33ff346",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=c339a407-51a6-4ede-87f8-1b88b33ff346&suite_entity_num=t100615",
+      "updated_at": "1783177447624",
+      "created_at": "1783177447559"
+    },
+    {
+      "task_id": "T433",
+      "summary": "[T433] 小龟问答多会话+提示词优化+图文混排输出",
+      "status": "todo",
+      "guid": "a2bb177e-e61c-4ee3-a716-d76590563e67",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=a2bb177e-e61c-4ee3-a716-d76590563e67&suite_entity_num=t100618",
+      "updated_at": "1783217168845",
+      "created_at": "1783217168806"
+    },
+    {
+      "task_id": "T437",
+      "summary": "[T437] 运营内容生产 CLI（eggturtle-cli）：Codex 直连后台发布内容与行情配置",
+      "status": "todo",
+      "guid": "36df2823-673c-4e7f-af02-24e080077db3",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=36df2823-673c-4e7f-af02-24e080077db3&suite_entity_num=t100622",
+      "updated_at": "1783220815401",
+      "created_at": "1783219573331"
+    },
+    {
+      "task_id": "T443",
+      "summary": "[T443] 地址卡快捷删除：新增后端 DELETE 接口+列表卡删除按钮",
+      "status": "todo",
+      "guid": "9f813349-808b-499b-9ee1-9b61b5e4ffcb",
+      "url": "https://applink.feishu.cn/client/todo/detail?guid=9f813349-808b-499b-9ee1-9b61b5e4ffcb&suite_entity_num=t100628",
+      "updated_at": "1783228961600",
+      "created_at": "1783228961567"
+    }
+  ],
+  "next_task": {
+    "task_id": "T385",
+    "summary": "[T385] 全局小宠物 UI（浮窗+轮播+拖拽+对话 sheet）",
+    "status": "todo",
+    "guid": "4c2d55b0-3f3d-48f3-a248-9e2f72f76659",
+    "url": "https://applink.feishu.cn/client/todo/detail?guid=4c2d55b0-3f3d-48f3-a248-9e2f72f76659&suite_entity_num=t100522",
+    "updated_at": "1783583350474",
+    "created_at": "1782089273069"
+  },
+  "current_task": {
+    "task_id": "T478",
+    "summary": "[T478] xuanyuku-cli 适配认证安全加固：API Key 优先+refresh token+429/锁定错误处理（先产出改造计划）",
+    "status": "todo",
+    "guid": "8ca74a79-4585-43d6-98b6-e31d7a8a9f9a",
+    "url": "https://applink.feishu.cn/client/todo/detail?guid=8ca74a79-4585-43d6-98b6-e31d7a8a9f9a&suite_entity_num=t100688",
+    "description": "任务编号：T478\n创建时间：2026-07-09 15:39:50 CST\n类型：miniapp-adaptation\nRepo：/Volumes/DATABASE/code/business/Eggturtle-breeding-library\n\n需求：\nP0-P3 认证加固已上线（限流/锁定/refresh token 轮换/API Key/密码策略）。独立 CLI 仓库 /Volumes/DATABASE/code/business/xuanyuku-cli 需要适配：调研现有认证与请求链路，产出改造计划文档，随后按计划实施。\n\n执行要求：\n- 以 task/doc 为主，不再依赖本地 task/context/state 文件。\n- 进度默认写评论，验收证据优先回填附件或评论。",
+    "updated_at": "1783582918991",
+    "completed_at": "0",
+    "attachments": [],
+    "tasklists": [
+      {
+        "section_guid": "b05f5485-c454-f6ad-4434-ba51d8f3d21c",
+        "tasklist_guid": "98aa93cd-88ff-4562-ba96-92887ccbc6cb"
+      }
+    ]
+  },
+  "recent_comments": []
+}

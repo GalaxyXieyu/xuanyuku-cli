@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-07-09T16:10:11+08:00",
+  "repo_scan": {
+    "root": "/Volumes/DATABASE/code/business/xuanyuku-cli",
+    "exists": true,
+    "name": "xuanyuku-cli",
+    "markers": {
+      "git": true,
+      "package_json": true,
+      "pnpm_lock": true,
+      "yarn_lock": false,
+      "npm_lock": false,
+      "pyproject": false,
+      "requirements_txt": false,
+      "go_mod": false,
+      "cargo_toml": false,
+      "miniapp_app_json": false,
+      "miniapp_project_config": false,
+      "src_dir": false,
+      "pages_dir": false,
+      "components_dir": false
+    },
+    "package_manager": "pnpm",
+    "framework_hints": []
+  }
+}
