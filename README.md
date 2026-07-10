@@ -23,6 +23,37 @@ pnpm build
 npx xuanyuku --help
 ```
 
+## AI 助理技能分发
+
+`skills/` 目录随 CLI 一起打进 tgz 分发包（`node scripts/pack-cli.mjs`），用户装完 CLI 后一条命令即可装好技能：
+
+```bash
+npm i -g https://xuanyuku.cn/cli/xuanyuku-cli-latest.tgz
+xuanyuku skill install          # 安装全部内置技能到 ~/.claude/skills/
+xuanyuku skill list             # 查看包内技能
+xuanyuku skill install xuanyuku-pet-assistant --target <目录>   # 指定技能/目录
+```
+
+### 用户接入话术（拿到 API Key 后发给任意 AI Agent）
+
+用户在小程序/后台拿到 API Key 后，把下面这段话原样发给任何能执行命令的 AI Agent（Claude Code、WorkBuddy 等均可），Agent 即可自动完成 CLI 安装、技能安装和登录：
+
+```text
+请帮我接入蛋龟选育库，按顺序执行：
+1. 安装命令行工具：npm i -g https://xuanyuku.cn/cli/xuanyuku-cli-latest.tgz
+   （如果上面地址不通，改用：npm i -g https://raw.githubusercontent.com/GalaxyXieyu/xuanyuku-cli/main/releases/xuanyuku-cli-latest.tgz）
+2. 安装店铺助理技能：xuanyuku skill install
+3. 用我的 Key 登录：xuanyuku login --api-key <我的Key>
+4. 登录成功后运行 xuanyuku whoami 确认身份，然后告诉我接入完成，不要在回复里复述我的 Key。
+
+我的 Key 是：<粘贴你的 API Key>
+```
+
+说明：
+
+- 第 2 步会把 `xuanyuku-pet-assistant` 技能装到 `~/.claude/skills/`，重启 Agent 会话后即可用大白话让助理干活（建档、查销量、生成分享二维码等）。
+- Key 以 `egtk_` 开头；泄露后可在后台 `xuanyuku apikey revoke` 撤销重发。
+
 ## 认证与凭证模型
 
 后端已上线认证安全加固（登录限流、账户锁定、Refresh Token 轮换、API Key、密码复杂度策略）。

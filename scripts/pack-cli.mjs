@@ -3,7 +3,7 @@
 // 产物: dist-pack/xuanyuku-cli-<version>.tgz,安装方式: npm i -g <tarball URL>
 import { build } from 'esbuild';
 import { execSync } from 'node:child_process';
-import { mkdirSync, rmSync, writeFileSync, readFileSync, copyFileSync, readdirSync, existsSync } from 'node:fs';
+import { mkdirSync, rmSync, writeFileSync, readFileSync, copyFileSync, readdirSync, existsSync, cpSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -28,6 +28,9 @@ await build({
   logLevel: 'info',
 });
 
+// 随包携带 AI 助理技能,安装后可用 `xuanyuku skill install` 落到 ~/.claude/skills/
+cpSync(join(root, 'skills'), join(stageDir, 'skills'), { recursive: true });
+
 writeFileSync(
   join(stageDir, 'package.json'),
   JSON.stringify(
@@ -36,6 +39,7 @@ writeFileSync(
       version: cliPkg.version,
       description: '蛋龟选育库 CLI(AI 宠物助理渠道分发包)',
       bin: { xuanyuku: 'bin/xuanyuku.js' },
+      files: ['bin', 'skills'],
       engines: { node: '>=18' },
     },
     null,

@@ -12,6 +12,7 @@ import { registerSeriesCommands } from '../commands/series';
 import { registerStatsCommands } from '../commands/stats';
 import { registerArticleCommands } from '../commands/article';
 import { registerCertificateCommands } from '../commands/certificate';
+import { registerSkillCommands } from '../commands/skill';
 
 const program = new Command();
 
@@ -33,6 +34,7 @@ registerSeriesCommands(program);
 registerStatsCommands(program);
 registerArticleCommands(program);
 registerCertificateCommands(program);
+registerSkillCommands(program);
 
 program.parse(process.argv);
 
