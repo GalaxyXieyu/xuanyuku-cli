@@ -1,6 +1,8 @@
 import { Command } from 'commander';
 import { createInterface } from 'node:readline';
+import { meResponseSchema } from '@xuanyuku/shared';
 import { passwordLogin, switchTenant, updateProfileFromAuth, logout } from '../client/auth';
+import { request } from '../client/http';
 import {
   loadProfile,
   listProfiles,

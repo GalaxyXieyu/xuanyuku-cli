@@ -24,7 +24,9 @@ export function registerSeriesCommands(program: Command): void {
           apiBase: opts.apiBase,
         });
 
-        console.log('正在获取系列列表...');
+        if (!opts.json) {
+          console.log('正在获取系列列表...');
+        }
 
         const result = await listSeries(ctx, {
           ...(opts.search && { search: opts.search }),
@@ -34,10 +36,11 @@ export function registerSeriesCommands(program: Command): void {
 
         if (opts.json) {
           console.log(JSON.stringify(result, null, 2));
-        } else {
-          console.log(`✓ 获取成功，共 ${result.total || 0} 个`);
-          console.log(`  当前页: ${result.page || 1}/${result.totalPages || 1}`);
+          return;
         }
+
+        console.log(`✓ 获取成功，共 ${result.total || 0} 个`);
+        console.log(`  当前页: ${result.page || 1}/${result.totalPages || 1}`);
       } catch (err) {
         console.error(`✗ 获取失败: ${describeError(err)}`);
         process.exit(1);

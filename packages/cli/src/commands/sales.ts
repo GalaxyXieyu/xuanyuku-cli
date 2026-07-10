@@ -15,6 +15,7 @@ export function registerSalesCommands(program: Command): void {
     .requiredOption('--product-id <id>', 'Product ID')
     .option('--profile <name>', 'Profile name')
     .option('--api-base <url>', 'API base URL')
+    .option('--json', 'Output machine-readable JSON only')
     .action(async (opts) => {
       try {
         const { ctx } = await resolveCommandContext({
@@ -22,9 +23,16 @@ export function registerSalesCommands(program: Command): void {
           apiBase: opts.apiBase,
         });
 
-        console.log('正在获取销售批次...');
+        if (!opts.json) {
+          console.log('正在获取销售批次...');
+        }
 
         const result = await listSaleBatches(ctx, opts.productId);
+
+        if (opts.json) {
+          console.log(JSON.stringify(result, null, 2));
+          return;
+        }
 
         if (result.items) {
           console.log(`✓ 获取成功，共 ${result.items.length} 批`);

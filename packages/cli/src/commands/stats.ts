@@ -32,7 +32,9 @@ export function registerStatsCommands(program: Command): void {
           apiBase: opts.apiBase,
         });
 
-        console.log('正在获取仪表盘数据...');
+        if (!opts.json) {
+          console.log('正在获取仪表盘数据...');
+        }
 
         const result = await getDashboardOverview(ctx, {
           ...(opts.window && { window: opts.window as 'today' | '7d' | '30d' }),
@@ -40,11 +42,12 @@ export function registerStatsCommands(program: Command): void {
 
         if (opts.json) {
           console.log(JSON.stringify(result, null, 2));
-        } else {
-          console.log(`✓ 获取成功`);
-          const data = result as Record<string, unknown>;
-          console.log(`  统计数据摘要: ${JSON.stringify(data).substring(0, 100)}...`);
+          return;
         }
+
+        console.log(`✓ 获取成功`);
+        const data = result as Record<string, unknown>;
+        console.log(`  统计数据摘要: ${JSON.stringify(data).substring(0, 100)}...`);
       } catch (err) {
         console.error(`✗ 获取失败: ${describeError(err)}`);
         process.exit(1);
@@ -71,7 +74,9 @@ export function registerStatsCommands(program: Command): void {
           apiBase: opts.apiBase,
         });
 
-        console.log('正在获取产品点击数据...');
+        if (!opts.json) {
+          console.log('正在获取产品点击数据...');
+        }
 
         const result = await listProductsPublicClicks(ctx, {
           ...(opts.days && { days: parseInt(opts.days, 10) }),
@@ -80,11 +85,12 @@ export function registerStatsCommands(program: Command): void {
 
         if (opts.json) {
           console.log(JSON.stringify(result, null, 2));
-        } else {
-          console.log(`✓ 获取成功`);
-          const data = result as Record<string, unknown>;
-          console.log(`  统计数据摘要: ${JSON.stringify(data).substring(0, 100)}...`);
+          return;
         }
+
+        console.log(`✓ 获取成功`);
+        const data = result as Record<string, unknown>;
+        console.log(`  统计数据摘要: ${JSON.stringify(data).substring(0, 100)}...`);
       } catch (err) {
         console.error(`✗ 获取失败: ${describeError(err)}`);
         process.exit(1);
@@ -98,6 +104,7 @@ export function registerStatsCommands(program: Command): void {
     .option('--profile <name>', 'Profile name')
     .option('--api-base <url>', 'API base URL')
     .option('--days <n>', 'Number of days')
+    .option('--json', 'Output machine-readable JSON only')
     .action(async (opts) => {
       try {
         const { ctx } = await resolveCommandContext({
@@ -105,11 +112,18 @@ export function registerStatsCommands(program: Command): void {
           apiBase: opts.apiBase,
         });
 
-        console.log('正在获取产品点击数据...');
+        if (!opts.json) {
+          console.log('正在获取产品点击数据...');
+        }
 
         const result = await getProductPublicClicks(ctx, opts.productId, {
           ...(opts.days && { days: parseInt(opts.days, 10) }),
         });
+
+        if (opts.json) {
+          console.log(JSON.stringify(result, null, 2));
+          return;
+        }
 
         console.log(`✓ 获取成功`);
         const data = result as Record<string, unknown>;
