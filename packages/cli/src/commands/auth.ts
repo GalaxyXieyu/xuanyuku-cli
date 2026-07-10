@@ -29,18 +29,30 @@ export function registerAuthCommands(program: Command): void {
           apiBaseEnv: process.env.XUANYUKU_CLI_API_BASE_URL,
         });
 
-        // API Key 模式：仅保存 key，不换 token、不做锁定/轮换负担
+        // API Key 模式：先校验凭证并同步服务端解析出的店铺上下文，避免后续分享类命令缺少 tenantId。
         if (opts.apiKey) {
+          const response = await request(apiBase, {
+            method: 'GET',
+            path: '/me',
+            apiKey: opts.apiKey,
+          });
+          const currentUser = meResponseSchema.parse(response.body);
           const profile: Profile = {
-            login: '(api-key)',
+            login: currentUser.user.account || currentUser.user.email || '(api-key)',
             accessToken: '',
             apiKey: opts.apiKey,
             apiBaseUrl: apiBase,
+            tenantId: currentUser.tenantId ?? undefined,
+            isSuperAdmin: currentUser.user.isSuperAdmin,
             tokenIssuedAt: new Date().toISOString(),
           };
           await saveProfile(opts.profile, profile);
           console.log(`✓ API Key 已保存到 profile「${opts.profile}」`);
-          console.log('  后续请求将走 x-api-key，401 时不会自动重登。');
+          if (profile.tenantId) {
+            console.log('  已同步店铺上下文，可直接使用分享和二维码功能。');
+          } else {
+            console.log('  当前 Key 未绑定店铺；需要先在小程序完成建档。');
+          }
           return;
         }
 

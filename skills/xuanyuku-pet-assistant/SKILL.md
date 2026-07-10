@@ -98,12 +98,43 @@ npm i -g https://raw.githubusercontent.com/GalaxyXieyu/xuanyuku-cli/main/release
 - CLI 会把接口返回的 PNG 二进制保存成本地图片文件。
 - WorkBuddy 应该发送这个本地图片路径对应的附件，而不是把路径当普通文字发给用户。
 
+### 固定链路：最新录入龟只 → 二维码
+
+当用户说“给我最新录入的龟生成二维码”或意思相近的话，按下面固定步骤执行。不要先查全量列表、手动排序，也不要先运行 `--help`：
+
+1. 查询最新录入的一只：
+
+```bash
+xuanyuku product list --page-size 1 --sort-by createdAt --sort-dir desc --json
+```
+
+2. 只读取 JSON 的 `products[0]`。如果 `products` 为空，直接告诉用户还没有可分享的龟只并停止；`products[0].id` 是后续唯一使用的 `productId`。
+3. 发布或刷新店铺分享入口。这个命令会自动绑定当前店铺，不需要额外传店铺 ID：
+
+```bash
+xuanyuku share publish --json
+```
+
+4. 只读取 JSON 的 `share.shareToken`，再用它和上一步的 `productId` 生成二维码。`<绝对 PNG 路径>` 必须是 WorkBuddy 可作为附件发送的本地文件路径：
+
+```bash
+xuanyuku share qr code --share-token <shareToken> --product-id <productId> --output <绝对 PNG 路径> --size 480 --json
+```
+
+5. 只读取 JSON 的 `path` 并把该文件作为图片附件发送。二维码失败时，才使用下面命令获取备用文本链接：
+
+```bash
+xuanyuku share qr url-link --share-token <shareToken> --product-id <productId> --json
+```
+
+这条固定链路的 JSON stdout 不含进度文案。不要从中文输出里猜 Token、龟只 ID 或附件路径。
+
 内部可用能力：
 
-- 发布/刷新店铺分享入口：`xuanyuku share publish ...`
-- 下载二维码 PNG：`xuanyuku share qr code --share-token <token> --product-id <productId> --output <path>`
-- 下载标签卡 PNG：`xuanyuku share qr label-card --share-token <token> --product-id <productId> --output <path>`
-- 获取小程序链接备用：`xuanyuku share qr url-link --share-token <token> --product-id <productId>`
+- 发布/刷新店铺分享入口：`xuanyuku share publish --json`
+- 下载二维码 PNG：`xuanyuku share qr code --share-token <token> --product-id <productId> --output <path> --json`
+- 下载标签卡 PNG：`xuanyuku share qr label-card --share-token <token> --product-id <productId> --output <path> --json`
+- 获取小程序链接备用：`xuanyuku share qr url-link --share-token <token> --product-id <productId> --json`
 
 对用户表达示例：
 
@@ -167,6 +198,7 @@ xuanyuku stats clicks list --json
 xuanyuku whoami
 
 xuanyuku product list --json
+# 最新录入的一只：--page-size 1 --sort-by createdAt --sort-dir desc
 xuanyuku product get <productId> --json
 xuanyuku product create ...
 xuanyuku product update <productId> ...
@@ -182,10 +214,10 @@ xuanyuku sale-batch list --product-id <id>
 xuanyuku sale-batch create ...
 xuanyuku sale-allocation create ...
 
-xuanyuku share publish ...
-xuanyuku share qr code --share-token <token> --product-id <id> --output <path>
-xuanyuku share qr label-card --share-token <token> --product-id <id> --output <path>
-xuanyuku share qr url-link --share-token <token> --product-id <id>
+xuanyuku share publish --json
+xuanyuku share qr code --share-token <token> --product-id <id> --output <path> --json
+xuanyuku share qr label-card --share-token <token> --product-id <id> --output <path> --json
+xuanyuku share qr url-link --share-token <token> --product-id <id> --json
 
 xuanyuku cert center --json
 xuanyuku cert issue preview|confirm ...
@@ -195,7 +227,7 @@ xuanyuku ai intake parse --input "<用户原话>"
 xuanyuku ai intake submit ...
 ```
 
-不确定参数时先跑 `<命令> --help`，不要凭空猜参数名。
+固定链路已写明命令和参数时，直接执行，不要额外运行 `--help`。只有遇到命令不存在、版本不匹配或未覆盖的新场景时，才运行 `--help`；不要凭空猜参数名。
 
 ## 定时任务模板
 

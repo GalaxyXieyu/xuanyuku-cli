@@ -10,6 +10,23 @@ import {
   downloadShareQrLabelCard,
 } from '../client/share-assets';
 
+function printJson(result: unknown): void {
+  console.log(JSON.stringify(result, null, 2));
+}
+
+function printAssetResult(
+  result: { path: string; size: number; source?: string },
+  input: { shareToken: string; productId?: string },
+  assetType: 'qr_code' | 'qr_label_card',
+): void {
+  printJson({
+    ...result,
+    assetType,
+    shareToken: input.shareToken,
+    productId: input.productId ?? null,
+  });
+}
+
 export function registerShareCommands(program: Command): void {
   const shareCmd = program
     .command('share')
@@ -25,6 +42,7 @@ export function registerShareCommands(program: Command): void {
     .option('--avatar-preset <preset>', 'Avatar preset (amber|ocean|forest|plum|graphite|sunrise)')
     .option('--brand-primary <color>', 'Brand primary color (hex)')
     .option('--brand-secondary <color>', 'Brand secondary color (hex)')
+    .option('--json', 'Output machine-readable JSON only')
     .action(async (opts) => {
       try {
         // Resolve profile
@@ -51,7 +69,9 @@ export function registerShareCommands(program: Command): void {
         // Create authenticated context
         const ctx = await createAuthContext(apiBase, profileName);
 
-        console.log('正在发布分享...');
+        if (!opts.json) {
+          console.log('正在发布分享...');
+        }
 
         const payload = {
           resourceType: 'tenant_feed' as const,
@@ -65,6 +85,11 @@ export function registerShareCommands(program: Command): void {
         };
 
         const result = await createShare(ctx, payload);
+
+        if (opts.json) {
+          printJson(result);
+          return;
+        }
 
         console.log(`✓ 分享发布成功`);
         if (result.share) {
@@ -96,6 +121,7 @@ export function registerShareCommands(program: Command): void {
     .option('--badge <badge>', 'Badge (query param)')
     .option('--from <from>', 'From (query param)')
     .option('--size <size>', 'QR code size (320|480|640)')
+    .option('--json', 'Output machine-readable JSON only')
     .action(async (opts) => {
       try {
         // Resolve API base only (no auth context needed - @Public endpoint)
@@ -106,7 +132,9 @@ export function registerShareCommands(program: Command): void {
           });
         }
 
-        console.log('正在下载二维码...');
+        if (!opts.json) {
+          console.log('正在下载二维码...');
+        }
 
         const result = await downloadShareQrCode(apiBase, opts.shareToken, opts.output, {
           ...(opts.productId && { productId: opts.productId }),
@@ -118,6 +146,11 @@ export function registerShareCommands(program: Command): void {
           ...(opts.from && { from: opts.from }),
           ...(opts.size && { size: parseInt(opts.size, 10) as 320 | 480 | 640 }),
         });
+
+        if (opts.json) {
+          printAssetResult(result, opts, 'qr_code');
+          return;
+        }
 
         console.log(`✓ 下载成功`);
         console.log(`  保存位置: ${result.path}`);
@@ -145,6 +178,7 @@ export function registerShareCommands(program: Command): void {
     .option('--badge <badge>', 'Badge (query param)')
     .option('--from <from>', 'From (query param)')
     .option('--size <size>', 'Card size (320|480|640)')
+    .option('--json', 'Output machine-readable JSON only')
     .action(async (opts) => {
       try {
         // Resolve API base only (no auth context needed - @Public endpoint)
@@ -155,7 +189,9 @@ export function registerShareCommands(program: Command): void {
           });
         }
 
-        console.log('正在下载标签卡...');
+        if (!opts.json) {
+          console.log('正在下载标签卡...');
+        }
 
         const result = await downloadShareQrLabelCard(apiBase, opts.shareToken, opts.output, {
           ...(opts.productId && { productId: opts.productId }),
@@ -167,6 +203,11 @@ export function registerShareCommands(program: Command): void {
           ...(opts.from && { from: opts.from }),
           ...(opts.size && { size: parseInt(opts.size, 10) as 320 | 480 | 640 }),
         });
+
+        if (opts.json) {
+          printAssetResult(result, opts, 'qr_label_card');
+          return;
+        }
 
         console.log(`✓ 下载成功`);
         console.log(`  保存位置: ${result.path}`);
@@ -192,6 +233,7 @@ export function registerShareCommands(program: Command): void {
     .option('--event <id>', 'Event ID (query param)')
     .option('--badge <badge>', 'Badge (query param)')
     .option('--from <from>', 'From (query param)')
+    .option('--json', 'Output machine-readable JSON only')
     .action(async (opts) => {
       try {
         // Resolve API base only (no auth context needed - @Public endpoint)
@@ -202,7 +244,9 @@ export function registerShareCommands(program: Command): void {
           });
         }
 
-        console.log('正在获取小程序链接...');
+        if (!opts.json) {
+          console.log('正在获取小程序链接...');
+        }
 
         const result = await getShareMiniappUrlLink(apiBase, opts.shareToken, {
           ...(opts.productId && { productId: opts.productId }),
@@ -214,8 +258,13 @@ export function registerShareCommands(program: Command): void {
           ...(opts.from && { from: opts.from }),
         });
 
+        if (opts.json) {
+          printJson(result);
+          return;
+        }
+
         console.log(`✓ 获取成功`);
-        console.log(JSON.stringify(result, null, 2));
+        printJson(result);
       } catch (err) {
         console.error(`✗ 获取失败: ${describeError(err)}`);
         process.exit(1);

@@ -123,17 +123,17 @@ export function registerProductCommands(program: Command): void {
   addCommonOptions(
     productCmd
       .command('list')
-      .description('List products')
-      .option('--page <n>', 'Page number')
-      .option('--page-size <n>', 'Page size')
+      .description('List products (page defaults to 1; page-size defaults to 20 and caps at 100)')
+      .option('--page <n>', '1-based page number (default: 1)')
+      .option('--page-size <n>', 'Items per page (default: 20, max: 100)')
       .option('--search <text>', 'Search text')
       .option('--type <type>', 'Product type')
       .option('--sex <sex>', 'Product sex')
       .option('--series-id <id>', 'Series ID')
       .option('--status <status>', 'Need mating status (normal|need_mating|warning)')
       .option('--sort-by <field>', 'Sort field (updatedAt|createdAt|id|identity)')
-      .option('--sort-dir <dir>', 'Sort direction (asc|desc)')
-      .option('--json', 'Output full JSON')
+      .option('--sort-dir <dir>', 'Sort direction (asc|desc; use createdAt desc for newest first)')
+      .option('--json', 'Output { products, total, page, pageSize, totalPages, stats }')
   ).action(async (opts) => {
     try {
       const { ctx } = await resolveCommandContext(opts);

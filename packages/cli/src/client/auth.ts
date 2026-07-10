@@ -2,6 +2,7 @@ import {
   passwordLoginResponseSchema,
   refreshTokenResponseSchema,
   switchTenantResponseSchema,
+  meResponseSchema,
 } from '@xuanyuku/shared';
 import { request, type RequestOptions } from './http';
 import { Profile, loadProfile, saveProfile } from './profile-store';

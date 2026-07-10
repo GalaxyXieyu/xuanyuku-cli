@@ -6,8 +6,9 @@ export async function createShare(
   ctx: AuthedContext,
   payload: Omit<z.infer<typeof createShareRequestSchema>, 'resourceId'> & { resourceId?: string }
 ): Promise<z.infer<typeof createShareResponseSchema>> {
-  // Default resourceId to current tenant ID
-  const tenantId = ctx.getTenantId();
+  // API Key profiles may not carry tenant metadata initially. Resolve it from the server before
+  // constructing the tenant_feed resource, then persist it for subsequent commands.
+  const tenantId = await ctx.resolveTenantId();
   const resourceId = payload.resourceId || tenantId;
 
   const body = createShareRequestSchema.parse({

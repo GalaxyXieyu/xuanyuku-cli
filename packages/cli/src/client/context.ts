@@ -1,5 +1,6 @@
 import { request, type RequestOptions } from './http';
 import { passwordLogin, refreshAccessToken, updateProfileFromAuth } from './auth';
+import { meResponseSchema } from '@xuanyuku/shared';
 import { loadProfile, clearProfileToken, saveProfile, type Profile } from './profile-store';
 import { ApiError, describeError } from './errors';
 import { createInterface } from 'node:readline';
@@ -156,6 +157,30 @@ export class AuthedContext {
         resolve(password);
       });
     });
+  }
+
+  async resolveTenantId(): Promise<string> {
+    if (this.profile.tenantId) {
+      return this.profile.tenantId;
+    }
+
+    const response = await this.request({
+      method: 'GET',
+      path: '/me',
+    });
+    const currentUser = meResponseSchema.parse(response.body);
+    const tenantId = currentUser.tenantId;
+
+    if (!tenantId) {
+      throw new Error('当前凭证没有绑定店铺，无法发布分享。请先在小程序完成建档。');
+    }
+
+    this.profile = {
+      ...this.profile,
+      tenantId,
+    };
+    await saveProfile(this.profileName, this.profile);
+    return tenantId;
   }
 
   getTenantId(): string {
