@@ -209,8 +209,8 @@ export class XuanyukuClient {
   listKeywords = (opts: Parameters<typeof market.listKeywords>[1]) =>
     market.listKeywords(this.ctx, opts);
 
-  getKeywordDetail = (tenantId: string, keywordId: string) =>
-    market.getKeywordDetail(this.ctx, tenantId, keywordId);
+  getKeywordDetail = (keywordId: string) =>
+    market.getKeywordDetail(this.ctx, keywordId);
 
   createKeyword = (tenantId: string, payload: Parameters<typeof market.createKeyword>[2]) =>
     market.createKeyword(this.ctx, tenantId, payload);
@@ -239,8 +239,8 @@ export class XuanyukuClient {
   listPublishHistory = (query: Parameters<typeof market.listPublishHistory>[1]) =>
     market.listPublishHistory(this.ctx, query);
 
-  getMarketOverview = (tenantId: string, query?: Parameters<typeof market.getMarketOverview>[2]) =>
-    market.getMarketOverview(this.ctx, tenantId, query);
+  getMarketOverview = (query?: Parameters<typeof market.getMarketOverview>[1]) =>
+    market.getMarketOverview(this.ctx, query);
 
   // Sales operations
   listSaleBatches = (productId: string) =>

@@ -44,13 +44,11 @@ export async function listKeywords(
 
 export async function getKeywordDetail(
   ctx: AuthedContext,
-  tenantId: string,
   keywordId: string
 ): Promise<z.infer<typeof marketKeywordDetailResponseSchema>> {
   const response = await ctx.request({
     method: 'GET',
-    path: `/api/proxy/admin/market-intelligence/keywords/${keywordId}`,
-    query: { tenantId },
+    path: `/market-intelligence/keywords/${keywordId}`,
   });
 
   return marketKeywordDetailResponseSchema.parse(response.body);
@@ -199,15 +197,14 @@ export async function listPublishHistory(
 
 export async function getMarketOverview(
   ctx: AuthedContext,
-  tenantId: string,
   query?: z.infer<typeof marketOverviewQuerySchema>
 ): Promise<z.infer<typeof marketOverviewResponseSchema>> {
   const parsedQuery = marketOverviewQuerySchema.parse(query ?? {});
 
   const response = await ctx.request({
     method: 'GET',
-    path: '/api/proxy/admin/market-intelligence/overview',
-    query: { tenantId, ...parsedQuery },
+    path: '/market-intelligence/overview',
+    query: parsedQuery,
   });
 
   return marketOverviewResponseSchema.parse(response.body);

@@ -35,16 +35,18 @@ function addAdminOptions(cmd: Command): Command {
 }
 
 function keywordPayload(opts: Record<string, unknown>) {
-  return {
-    ...(opts.code && { code: opts.code }),
-    ...(opts.displayName && { displayName: opts.displayName }),
-    ...(opts.canonicalKeyword && { canonicalKeyword: opts.canonicalKeyword }),
-    ...(opts.species && { species: opts.species }),
-    ...(opts.gradeHint && { gradeHint: opts.gradeHint }),
-    ...(opts.aliases && { aliases: parseAliases(opts.aliases as string[]) }),
-    ...(opts.isActive !== undefined && { isActive: opts.isActive }),
-    ...(opts.sortOrder && { sortOrder: parseOptionalInt(String(opts.sortOrder)) }),
-  };
+  const payload: Record<string, unknown> = {};
+
+  if (opts.code !== undefined) payload.code = opts.code;
+  if (opts.displayName !== undefined) payload.displayName = opts.displayName;
+  if (opts.canonicalKeyword !== undefined) payload.canonicalKeyword = opts.canonicalKeyword;
+  if (opts.species !== undefined) payload.species = opts.species;
+  if (opts.gradeHint !== undefined) payload.gradeHint = opts.gradeHint;
+  if (opts.aliases !== undefined) payload.aliases = parseAliases(opts.aliases as string[]);
+  if (opts.isActive !== undefined) payload.isActive = opts.isActive;
+  if (opts.sortOrder !== undefined) payload.sortOrder = parseOptionalInt(String(opts.sortOrder));
+
+  return payload;
 }
 
 function addKeywordMutationOptions(cmd: Command, required: boolean): Command {
@@ -78,7 +80,6 @@ export function registerMarketCommands(program: Command): void {
     marketCmd
       .command('overview')
       .description('View market overview')
-      .requiredOption('--tenant-id <id>', 'Tenant ID')
       .option('--window <window>', 'Time window (7d|30d)')
       .option('--json', 'Output full JSON')
   ).action(async (opts) => {
@@ -86,7 +87,7 @@ export function registerMarketCommands(program: Command): void {
       const { ctx } = await resolveCommandContext(opts);
       await ensureSuperAdmin(ctx);
 
-      const result = await getMarketOverview(ctx, opts.tenantId, {
+      const result = await getMarketOverview(ctx, {
         ...(opts.window && { window: opts.window }),
       });
 
@@ -193,14 +194,13 @@ export function registerMarketCommands(program: Command): void {
       .command('detail')
       .description('Get market keyword detail')
       .argument('<keywordId>', 'Keyword ID')
-      .requiredOption('--tenant-id <id>', 'Tenant ID')
       .option('--json', 'Output full JSON')
   ).action(async (keywordId, opts) => {
     try {
       const { ctx } = await resolveCommandContext(opts);
       await ensureSuperAdmin(ctx);
 
-      const result = await getKeywordDetail(ctx, opts.tenantId, keywordId);
+      const result = await getKeywordDetail(ctx, keywordId);
       opts.json ? printJson(result) : console.log(`✓ 获取成功: ${result.keyword.displayName}`);
     } catch (err) {
       console.error(`✗ 获取失败: ${describeError(err)}`);
@@ -222,7 +222,16 @@ export function registerMarketCommands(program: Command): void {
       await ensureSuperAdmin(ctx);
 
       console.log('正在创建关键词...');
-      const result = await createKeyword(ctx, opts.tenantId, keywordPayload(opts));
+      const result = await createKeyword(ctx, opts.tenantId, {
+        code: opts.code,
+        displayName: opts.displayName,
+        canonicalKeyword: opts.canonicalKeyword,
+        aliases: parseAliases(opts.aliases) ?? [],
+        ...(opts.species && { species: opts.species }),
+        ...(opts.gradeHint && { gradeHint: opts.gradeHint }),
+        ...(opts.isActive !== undefined && { isActive: opts.isActive }),
+        ...(opts.sortOrder && { sortOrder: parseOptionalInt(opts.sortOrder) }),
+      });
       console.log(`✓ 关键词创建成功: ${result.keyword.id}`);
     } catch (err) {
       console.error(`✗ 创建失败: ${describeError(err)}`);

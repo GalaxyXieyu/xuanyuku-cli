@@ -42,27 +42,47 @@ function parseCsv(value?: string): string[] | undefined {
 }
 
 function productMutationPayload(opts: Record<string, unknown>) {
-  return {
-    ...(opts.type && { type: opts.type }),
-    ...(opts.alias && { alias: opts.alias }),
-    ...(opts.name && { name: opts.name }),
-    ...(opts.seriesId && { seriesId: opts.seriesId }),
-    ...(opts.sex && { sex: opts.sex }),
-    ...(opts.description && { description: opts.description }),
-    ...(opts.sireProductId && { sireProductId: opts.sireProductId }),
-    ...(opts.damProductId && { damProductId: opts.damProductId }),
-    ...(opts.mateProductId && { mateProductId: opts.mateProductId }),
-    ...(opts.lineageType && { lineageType: opts.lineageType }),
-    ...(opts.crossLabel && { crossLabel: opts.crossLabel }),
-    ...(opts.offspringUnitPrice !== undefined && {
-      offspringUnitPrice: parseOptionalFloat(String(opts.offspringUnitPrice)),
-    }),
-    ...(opts.excludeFromBreeding !== undefined && { excludeFromBreeding: opts.excludeFromBreeding }),
-    ...(opts.hasSample !== undefined && { hasSample: opts.hasSample }),
-    ...(opts.inStock !== undefined && { inStock: opts.inStock }),
-    ...(opts.popularityScore !== undefined && { popularityScore: parseOptionalInt(String(opts.popularityScore)) }),
-    ...(opts.featured !== undefined && { isFeatured: opts.featured }),
-  };
+  const payload: Record<string, unknown> = {};
+  const fields = [
+    'type',
+    'alias',
+    'name',
+    'seriesId',
+    'sex',
+    'description',
+    'sireProductId',
+    'damProductId',
+    'mateProductId',
+    'lineageType',
+    'crossLabel',
+  ];
+
+  for (const field of fields) {
+    if (opts[field] !== undefined) {
+      payload[field] = opts[field];
+    }
+  }
+
+  if (opts.offspringUnitPrice !== undefined) {
+    payload.offspringUnitPrice = parseOptionalFloat(String(opts.offspringUnitPrice));
+  }
+  if (opts.excludeFromBreeding !== undefined) {
+    payload.excludeFromBreeding = opts.excludeFromBreeding;
+  }
+  if (opts.hasSample !== undefined) {
+    payload.hasSample = opts.hasSample;
+  }
+  if (opts.inStock !== undefined) {
+    payload.inStock = opts.inStock;
+  }
+  if (opts.popularityScore !== undefined) {
+    payload.popularityScore = parseOptionalInt(String(opts.popularityScore));
+  }
+  if (opts.featured !== undefined) {
+    payload.isFeatured = opts.featured;
+  }
+
+  return payload;
 }
 
 function addProductMutationOptions(cmd: Command): Command {

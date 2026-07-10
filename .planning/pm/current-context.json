@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-09T16:10:11+08:00",
+  "generated_at": "2026-07-09T18:07:56+08:00",
   "project": {
     "name": "蛋龟选育库",
     "repo_root": "/Volumes/DATABASE/code/business/xuanyuku-cli",
@@ -261,13 +261,13 @@
     "created_at": "1782089273069"
   },
   "current_task": {
-    "task_id": "T478",
-    "summary": "[T478] xuanyuku-cli 适配认证安全加固：API Key 优先+refresh token+429/锁定错误处理（先产出改造计划）",
+    "task_id": "T385",
+    "summary": "[T385] 全局小宠物 UI（浮窗+轮播+拖拽+对话 sheet）",
     "status": "todo",
-    "guid": "8ca74a79-4585-43d6-98b6-e31d7a8a9f9a",
-    "url": "https://applink.feishu.cn/client/todo/detail?guid=8ca74a79-4585-43d6-98b6-e31d7a8a9f9a&suite_entity_num=t100688",
-    "description": "任务编号：T478\n创建时间：2026-07-09 15:39:50 CST\n类型：miniapp-adaptation\nRepo：/Volumes/DATABASE/code/business/Eggturtle-breeding-library\n\n需求：\nP0-P3 认证加固已上线（限流/锁定/refresh token 轮换/API Key/密码策略）。独立 CLI 仓库 /Volumes/DATABASE/code/business/xuanyuku-cli 需要适配：调研现有认证与请求链路，产出改造计划文档，随后按计划实施。\n\n执行要求：\n- 以 task/doc 为主，不再依赖本地 task/context/state 文件。\n- 进度默认写评论，验收证据优先回填附件或评论。",
-    "updated_at": "1783582918991",
+    "guid": "4c2d55b0-3f3d-48f3-a248-9e2f72f76659",
+    "url": "https://applink.feishu.cn/client/todo/detail?guid=4c2d55b0-3f3d-48f3-a248-9e2f72f76659&suite_entity_num=t100522",
+    "description": "任务编号：T385\n创建时间：2026-06-22 08:47:52 CST\n类型：miniapp-adaptation\nRepo：/Volumes/DATABASE/code/business/Eggturtle-breeding-library\n\n需求：\nP3: 全局小宠物 UI。依赖 P2(T384) 的 AI 通道。范围：1) apps/miniapp 全局浮窗组件（页面级注入或 app 根节点），位置可拖拽并贴边吸附，位置持久化；2) idle 状态帧序列轮播（PNG 序列，<200KB/动作），含 2-3 个 idle 动作随机切换；3) 互动场景动作：点击/长按/拖拽 触发对应反馈动作 + 气泡提示；4) 半屏 sheet 对话面板：复用 MiniSheetFrame 与 --mini-* token，对接 P2 流式 AI，支持流式文本渲染 + 打字机/光标尾巴；5) 全局开关与免打扰设置入口。约束：所有样式用 --mini-* token，不硬编码颜色/尺寸；sheet 内变量遵循 MINI_SHEET_LAYOUT_VARS 注入或 var(..., fallback)；拖拽手势遵循已知陷阱（handleTouchStart 不 setState，用 transform 位移）。验收：1) 全局可见且不遮挡关键操作；2) idle/互动动作流畅 60fps；3) 对话流式可见；4) 拖拽与底部 tab 不冲突；5) iOS/Android 手势均稳定。\n\n执行要求：\n- 以 task/doc 为主，不再依赖本地 task/context/state 文件。\n- 进度默认写评论，验收证据优先回填附件或评论。",
+    "updated_at": "1783583350474",
     "completed_at": "0",
     "attachments": [],
     "tasklists": [

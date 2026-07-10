@@ -136,8 +136,8 @@ export async function updateAdminGuiquanCommentStatus(
   const body = updateAdminGuiquanCommunityCommentStatusRequestSchema.parse(payload);
 
   const response = await ctx.request({
-    method: 'PUT',
-    path: `/api/proxy/admin/guiquan/community/posts/${postId}/comments/${commentId}`,
+    method: 'PATCH',
+    path: `/api/proxy/admin/guiquan/community/comments/${commentId}/status`,
     json: body,
   });
 
@@ -152,8 +152,8 @@ export async function updateAdminGuiquanReportStatus(
   const body = updateAdminGuiquanCommunityReportStatusRequestSchema.parse(payload);
 
   const response = await ctx.request({
-    method: 'PUT',
-    path: `/api/proxy/admin/guiquan/community/reports/${reportId}`,
+    method: 'PATCH',
+    path: `/api/proxy/admin/guiquan/community/reports/${reportId}/status`,
     json: body,
   });
 

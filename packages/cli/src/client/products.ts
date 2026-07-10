@@ -150,7 +150,7 @@ export async function updateProductEvent(
   const body = updateProductEventRequestSchema.parse(payload);
 
   const response = await ctx.request({
-    method: 'PUT',
+    method: 'PATCH',
     path: `/products/${productId}/events/${eventId}`,
     json: body,
   });
