@@ -11,6 +11,7 @@ import { registerFeaturedCommands } from '../commands/featured';
 import { registerSeriesCommands } from '../commands/series';
 import { registerStatsCommands } from '../commands/stats';
 import { registerArticleCommands } from '../commands/article';
+import { registerUserCommands } from '../commands/users';
 import { registerCertificateCommands } from '../commands/certificate';
 import { registerSkillCommands } from '../commands/skill';
 
@@ -19,7 +20,7 @@ const program = new Command();
 program
   .name('xuanyuku')
   .description('Xuanyuku CLI for content management and market intelligence')
-  .version('0.1.0');
+  .version('0.1.2');
 
 // Register command groups
 registerAuthCommands(program);
@@ -33,6 +34,7 @@ registerFeaturedCommands(program);
 registerSeriesCommands(program);
 registerStatsCommands(program);
 registerArticleCommands(program);
+registerUserCommands(program);
 registerCertificateCommands(program);
 registerSkillCommands(program);
 

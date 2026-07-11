@@ -23,6 +23,7 @@ export const SuperAdminAuditAction = {
   ListUsers: 'admin.users.list',
   UpdateUser: 'admin.users.update',
   DeleteUser: 'admin.users.delete',
+  SetUserSuperAdmin: 'admin.users.super-admin.set',
   UpsertTenantMember: 'admin.tenants.members.upsert',
   RemoveTenantMember: 'admin.tenants.members.remove',
   GetPlatformBranding: 'admin.branding.platform.get',
@@ -110,6 +111,7 @@ export const superAdminAuditActionSchema = z.enum([
   SuperAdminAuditAction.ListUsers,
   SuperAdminAuditAction.UpdateUser,
   SuperAdminAuditAction.DeleteUser,
+  SuperAdminAuditAction.SetUserSuperAdmin,
   SuperAdminAuditAction.UpsertTenantMember,
   SuperAdminAuditAction.RemoveTenantMember,
   SuperAdminAuditAction.GetPlatformBranding,
@@ -407,6 +409,16 @@ export const updateAdminUserRequestSchema = z
 
 export const updateAdminUserResponseSchema = z.object({
   user: adminUserSchema,
+  auditLogId: z.string().min(1),
+});
+
+export const setAdminUserSuperAdminRequestSchema = z.object({
+  isSuperAdmin: z.boolean(),
+});
+
+export const setAdminUserSuperAdminResponseSchema = z.object({
+  user: adminUserSchema,
+  previousIsSuperAdmin: z.boolean(),
   auditLogId: z.string().min(1),
 });
 
@@ -894,6 +906,8 @@ export type ListAdminTenantsResponse = z.infer<typeof listAdminTenantsResponseSc
 export type ListAdminUsersResponse = z.infer<typeof listAdminUsersResponseSchema>;
 export type UpdateAdminUserRequest = z.infer<typeof updateAdminUserRequestSchema>;
 export type UpdateAdminUserResponse = z.infer<typeof updateAdminUserResponseSchema>;
+export type SetAdminUserSuperAdminRequest = z.infer<typeof setAdminUserSuperAdminRequestSchema>;
+export type SetAdminUserSuperAdminResponse = z.infer<typeof setAdminUserSuperAdminResponseSchema>;
 export type DeleteAdminTenantRequest = z.infer<typeof deleteAdminTenantRequestSchema>;
 export type DeleteAdminTenantResponse = z.infer<typeof deleteAdminTenantResponseSchema>;
 export type DeleteAdminUserRequest = z.infer<typeof deleteAdminUserRequestSchema>;

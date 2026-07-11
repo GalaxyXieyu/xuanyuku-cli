@@ -94,6 +94,14 @@ export {
   updateAdminGuiquanReportStatus,
 } from './client/guiquan-community';
 export {
+  listAdminUsers,
+  getAdminUser,
+  setAdminUserSuperAdmin,
+  listAdminTenantMembers,
+  upsertAdminTenantMember,
+  removeAdminTenantMember,
+} from './client/admin-users';
+export {
   listAnnouncements,
   createAnnouncementDraft,
   publishAnnouncement,
