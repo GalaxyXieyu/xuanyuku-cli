@@ -10,6 +10,7 @@ import {
   publishAdminGuiquanPost,
   rejectAdminGuiquanPost,
   archiveAdminGuiquanPost,
+  restoreAdminGuiquanPost,
   updateAdminGuiquanCommentStatus,
   updateAdminGuiquanReportStatus,
 } from '../client/guiquan-community';
@@ -345,6 +346,34 @@ export function registerArticleCommands(program: Command): void {
         }
       } catch (err) {
         console.error(`✗ 归档失败: ${describeError(err)}`);
+        process.exit(1);
+      }
+    });
+
+  guiquanCmd
+    .command('restore')
+    .description('Restore an archived guiquan post back to published')
+    .argument('<postId>', 'Post ID')
+    .option('--profile <name>', 'Profile name')
+    .option('--api-base <url>', 'API base URL')
+    .action(async (postId, opts) => {
+      try {
+        const { ctx } = await resolveCommandContext({
+          profile: opts.profile,
+          apiBase: opts.apiBase,
+        });
+
+        await ensureSuperAdmin(ctx);
+
+        console.log('正在恢复帖子...');
+
+        const result = await restoreAdminGuiquanPost(ctx, postId);
+
+        if (result.post) {
+          console.log(`✓ 帖子恢复上架成功（状态 ${result.post.status}）`);
+        }
+      } catch (err) {
+        console.error(`✗ 恢复失败: ${describeError(err)}`);
         process.exit(1);
       }
     });

@@ -90,6 +90,7 @@ export {
   publishAdminGuiquanPost,
   rejectAdminGuiquanPost,
   archiveAdminGuiquanPost,
+  restoreAdminGuiquanPost,
   updateAdminGuiquanCommentStatus,
   updateAdminGuiquanReportStatus,
 } from './client/guiquan-community';

@@ -127,6 +127,18 @@ export async function archiveAdminGuiquanPost(
   return adminGuiquanCommunityPostResponseSchema.parse(response.body);
 }
 
+export async function restoreAdminGuiquanPost(
+  ctx: AuthedContext,
+  postId: string
+): Promise<z.infer<typeof adminGuiquanCommunityPostResponseSchema>> {
+  const response = await ctx.request({
+    method: 'POST',
+    path: `/api/proxy/admin/guiquan/community/posts/${postId}/restore`,
+  });
+
+  return adminGuiquanCommunityPostResponseSchema.parse(response.body);
+}
+
 export async function updateAdminGuiquanCommentStatus(
   ctx: AuthedContext,
   postId: string,
