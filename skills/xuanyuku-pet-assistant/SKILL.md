@@ -51,7 +51,7 @@ description: 蛋龟选育库「AI 宠物助理」。当用户提到接入/绑定
 
 当用户说“接入/绑定，Key 是 xxx”时，后台按顺序处理：
 
-1. 检查 CLI 是否可用：`xuanyuku --version`。
+1. 检查 CLI 是否可用：`xuanyuku-cli --version`。
 2. 如果未安装，再告诉用户安装命令：
 
 ```bash
@@ -138,36 +138,36 @@ npm i -g https://raw.githubusercontent.com/GalaxyXieyu/xuanyuku-cli/main/release
 1. 查询最新录入的一只：
 
 ```bash
-xuanyuku product list --page-size 1 --sort-by createdAt --sort-dir desc --json
+xuanyuku-cli product list --page-size 1 --sort-by createdAt --sort-dir desc --json
 ```
 
 2. 只读取 JSON 的 `products[0]`。如果 `products` 为空，直接告诉用户还没有可分享的龟只并停止；`products[0].id` 是后续唯一使用的 `productId`。
 3. 发布或刷新店铺分享入口。这个命令会自动绑定当前店铺，不需要额外传店铺 ID：
 
 ```bash
-xuanyuku share publish --json
+xuanyuku-cli share publish --json
 ```
 
 4. 只读取 JSON 的 `share.shareToken`，再用它和上一步的 `productId` 生成二维码。`<绝对 PNG 路径>` 必须是 WorkBuddy 可作为附件发送的本地文件路径：
 
 ```bash
-xuanyuku share qr code --share-token <shareToken> --product-id <productId> --output <绝对 PNG 路径> --size 480 --json
+xuanyuku-cli share qr code --share-token <shareToken> --product-id <productId> --output <绝对 PNG 路径> --size 480 --json
 ```
 
 5. 只读取 JSON 的 `path` 并把该文件作为图片附件发送。二维码失败时，才使用下面命令获取备用文本链接：
 
 ```bash
-xuanyuku share qr url-link --share-token <shareToken> --product-id <productId> --json
+xuanyuku-cli share qr url-link --share-token <shareToken> --product-id <productId> --json
 ```
 
 这条固定链路的 JSON stdout 不含进度文案。不要从中文输出里猜 Token、龟只 ID 或附件路径。
 
 内部可用能力：
 
-- 发布/刷新店铺分享入口：`xuanyuku share publish --json`
-- 下载二维码 PNG：`xuanyuku share qr code --share-token <token> --product-id <productId> --output <path> --json`
-- 下载标签卡 PNG：`xuanyuku share qr label-card --share-token <token> --product-id <productId> --output <path> --json`
-- 获取小程序链接备用：`xuanyuku share qr url-link --share-token <token> --product-id <productId> --json`
+- 发布/刷新店铺分享入口：`xuanyuku-cli share publish --json`
+- 下载二维码 PNG：`xuanyuku-cli share qr code --share-token <token> --product-id <productId> --output <path> --json`
+- 下载标签卡 PNG：`xuanyuku-cli share qr label-card --share-token <token> --product-id <productId> --output <path> --json`
+- 获取小程序链接备用：`xuanyuku-cli share qr url-link --share-token <token> --product-id <productId> --json`
 
 对用户表达示例：
 
@@ -183,6 +183,7 @@ xuanyuku share qr url-link --share-token <shareToken> --product-id <productId> -
 
 - 创建/更新产品、上传图片、记录配种/产蛋、开单前，必须先用中文复述将要做的事，让用户确认。
 - 删除类操作属于高风险；限免版通常不支持。直接告诉用户“删除建议在小程序里操作，避免误删”。
+- 龟圈帖子在 CLI 里当前按“归档/恢复”处理，不按物理删除理解；不要承诺彻底删除帖子。
 - 后端返回 `SCOPE_DENIED` 时，用中文转述限制原因，不要重试。
 - 报 429 时告诉用户“请求太频繁了，稍等一会儿再试”。
 
@@ -213,49 +214,49 @@ xuanyuku share qr url-link --share-token <shareToken> --product-id <productId> -
 
 ### 行情
 
-`market` 命令组当前仅平台管理员可用。普通用户问行情时，说：
+已绑定店铺的普通用户可以只读查询行情概览。用户问行情时，先静默查询 `market overview`，再用一句中文概括最值得关注的变化；只有数据不足时才说：
 
 > 行情能力目前主要在小程序里查看，我这边暂时不能直接替你查全量行情。你可以告诉我想看的品种，我可以帮你整理记录和后续提醒。
 
-不要尝试执行平台管理员行情命令。
+价格快照、关键词、审核、发布历史和行情发布仍是平台管理员能力。普通用户不得尝试这些管理命令；公告发布和行情发布不属于生产真实写入的默认验证范围，只有人工明确切换到受控测试环境并确认写入时，才能做相关演练。
 
 ## 仅后台使用的命令速查
 
 这些命令只允许在工具层使用。不得复制、转述、概括或出现在用户可见的过程消息、思考摘要和最终回复中。
 
 ```bash
-xuanyuku stats overview --json
-xuanyuku stats clicks list --json
-xuanyuku whoami
+xuanyuku-cli stats overview --json
+xuanyuku-cli stats clicks list --json
+xuanyuku-cli whoami
 
-xuanyuku product list --json
+xuanyuku-cli product list --json
 # 最新录入的一只：--page-size 1 --sort-by createdAt --sort-dir desc
-xuanyuku product get <productId> --json
-xuanyuku product create ...
-xuanyuku product update <productId> ...
-xuanyuku product event list|add ...
-xuanyuku product image list|upload ...
+xuanyuku-cli product get <productId> --json
+xuanyuku-cli product create ...
+xuanyuku-cli product update <productId> ...
+xuanyuku-cli product event list|add ...
+xuanyuku-cli product image list|upload ...
 
-xuanyuku product mating add ...
-xuanyuku product egg add ...
-xuanyuku product mating-history --product-id <id> --json
-xuanyuku product family-tree --product-id <id> --json
+xuanyuku-cli product mating add ...
+xuanyuku-cli product egg add ...
+xuanyuku-cli product mating-history --product-id <id> --json
+xuanyuku-cli product family-tree --product-id <id> --json
 
-xuanyuku sale-batch list --product-id <id>
-xuanyuku sale-batch create ...
-xuanyuku sale-allocation create ...
+xuanyuku-cli sale-batch list --product-id <id>
+xuanyuku-cli sale-batch create ...
+xuanyuku-cli sale-allocation create ...
 
-xuanyuku share publish --json
-xuanyuku share qr code --share-token <token> --product-id <id> --output <path> --json
-xuanyuku share qr label-card --share-token <token> --product-id <id> --output <path> --json
-xuanyuku share qr url-link --share-token <token> --product-id <id> --json
+xuanyuku-cli share publish --json
+xuanyuku-cli share qr code --share-token <token> --product-id <id> --output <path> --json
+xuanyuku-cli share qr label-card --share-token <token> --product-id <id> --output <path> --json
+xuanyuku-cli share qr url-link --share-token <token> --product-id <id> --json
 
-xuanyuku cert center --json
-xuanyuku cert issue preview|confirm ...
-xuanyuku couple-photo generate --product-id <id>
+xuanyuku-cli cert center --json
+xuanyuku-cli cert issue preview|confirm ...
+xuanyuku-cli couple-photo generate --product-id <id>
 
-xuanyuku ai intake parse --input "<用户原话>"
-xuanyuku ai intake submit ...
+xuanyuku-cli ai intake parse --input "<用户原话>"
+xuanyuku-cli ai intake submit ...
 ```
 
 固定链路已写明命令和参数时，直接执行，不要额外运行 `--help`。只有遇到命令不存在、版本不匹配或未覆盖的新场景时，才运行 `--help`；不要凭空猜参数名。

@@ -195,7 +195,7 @@ export class AuthedContext {
 export async function createAuthContext(apiBase: string, profileName: string): Promise<AuthedContext> {
   const profile = await loadProfile(profileName);
   if (!profile) {
-    throw new Error(`Profile ${profileName} not found. Please run 'xuanyuku login' first.`);
+    throw new Error(`Profile ${profileName} not found. Please run 'xuanyuku-cli login' first.`);
   }
 
   return new AuthedContext(apiBase, profileName, profile);

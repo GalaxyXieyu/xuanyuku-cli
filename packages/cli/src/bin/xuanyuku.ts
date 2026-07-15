@@ -18,9 +18,9 @@ import { registerSkillCommands } from '../commands/skill';
 const program = new Command();
 
 program
-  .name('xuanyuku')
+  .name('xuanyuku-cli')
   .description('Xuanyuku CLI for content management and market intelligence')
-  .version('0.1.4');
+  .version('0.1.5');
 
 // Register command groups
 registerAuthCommands(program);

@@ -38,7 +38,7 @@ writeFileSync(
       name: 'xuanyuku-cli',
       version: cliPkg.version,
       description: '蛋龟选育库 CLI(AI 宠物助理渠道分发包)',
-      bin: { xuanyuku: 'bin/xuanyuku.js' },
+      bin: { 'xuanyuku-cli': 'bin/xuanyuku.js' },
       files: ['bin', 'skills'],
       engines: { node: '>=18' },
     },

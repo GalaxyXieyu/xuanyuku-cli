@@ -20,7 +20,7 @@ pnpm build
 ## 使用
 
 ```bash
-npx xuanyuku --help
+npx xuanyuku-cli --help
 ```
 
 ## AI 助理技能分发
@@ -29,9 +29,9 @@ npx xuanyuku --help
 
 ```bash
 npm i -g https://xuanyuku.cn/cli/xuanyuku-cli-latest.tgz
-xuanyuku skill install          # 安装全部内置技能到 ~/.claude/skills/
-xuanyuku skill list             # 查看包内技能
-xuanyuku skill install xuanyuku-pet-assistant --target <目录>   # 指定技能/目录
+xuanyuku-cli skill install          # 安装全部内置技能到 ~/.claude/skills/
+xuanyuku-cli skill list             # 查看包内技能
+xuanyuku-cli skill install xuanyuku-pet-assistant --target <目录>   # 指定技能/目录
 ```
 
 ### 用户接入话术（拿到 API Key 后发给任意 AI Agent）
@@ -42,9 +42,9 @@ xuanyuku skill install xuanyuku-pet-assistant --target <目录>   # 指定技能
 请帮我接入蛋龟选育库，按顺序执行：
 1. 安装命令行工具：npm i -g https://xuanyuku.cn/cli/xuanyuku-cli-latest.tgz
    （如果上面地址不通，改用：npm i -g https://raw.githubusercontent.com/GalaxyXieyu/xuanyuku-cli/main/releases/xuanyuku-cli-latest.tgz）
-2. 安装店铺助理技能：xuanyuku skill install
-3. 用我的 Key 登录：xuanyuku login --api-key <我的Key>
-4. 登录成功后运行 xuanyuku whoami 确认身份，然后告诉我接入完成，不要在回复里复述我的 Key。
+2. 安装店铺助理技能：xuanyuku-cli skill install
+3. 用我的 Key 登录：xuanyuku-cli login --api-key <我的Key>
+4. 登录成功后运行 xuanyuku-cli whoami 确认身份，然后告诉我接入完成，不要在回复里复述我的 Key。
 
 我的 Key 是：<粘贴你的 API Key>
 ```
@@ -52,7 +52,7 @@ xuanyuku skill install xuanyuku-pet-assistant --target <目录>   # 指定技能
 说明：
 
 - 第 2 步会把 `xuanyuku-pet-assistant` 技能装到 `~/.claude/skills/`，重启 Agent 会话后即可用大白话让助理干活（建档、查销量、生成分享二维码等）。
-- Key 以 `egtk_` 开头；泄露后可在后台 `xuanyuku apikey revoke` 撤销重发。
+- Key 以 `egtk_` 开头；泄露后可在后台 `xuanyuku-cli apikey revoke` 撤销重发。
 
 ## 认证与凭证模型
 
@@ -69,29 +69,29 @@ CLI 按优先级支持三种凭证，**自动化场景强烈建议用 API Key**�
 
 ```bash
 # 1. 先用账号密码登录一次（创建 key 需要 Bearer 身份）
-xuanyuku login --login <账号>
+xuanyuku-cli login --login <账号>
 
 # 2. 创建 API Key（明文仅显示一次，请立即保存）
-xuanyuku apikey create --name "ops-cli"                 # 永不过期
-xuanyuku apikey create --name "ci" --expires-days 90     # 90 天后过期
-xuanyuku apikey create --name "ci" --save-profile ops    # 创建并直接存入 profile
+xuanyuku-cli apikey create --name "ops-cli"                 # 永不过期
+xuanyuku-cli apikey create --name "ci" --expires-days 90     # 90 天后过期
+xuanyuku-cli apikey create --name "ci" --save-profile ops    # 创建并直接存入 profile
 
 # 3. 用 API Key 保存为长期凭证
-xuanyuku login --api-key egtk_xxx --profile ops
+xuanyuku-cli login --api-key egtk_xxx --profile ops
 
 # 4. 之后所有命令走 x-api-key
-xuanyuku --profile ops whoami
+xuanyuku-cli --profile ops whoami
 
 # 管理
-xuanyuku apikey list
-xuanyuku apikey revoke <id>
+xuanyuku-cli apikey list
+xuanyuku-cli apikey revoke <id>
 ```
 
 ### 交互式登录与登出
 
 ```bash
-xuanyuku login --login <账号>     # 密码登录，自动保存 refresh token
-xuanyuku logout                    # 撤销 refresh token 并清除本地凭证
+xuanyuku-cli login --login <账号>     # 密码登录，自动保存 refresh token
+xuanyuku-cli logout                    # 撤销 refresh token 并清除本地凭证
 ```
 
 ### 错误处理约定

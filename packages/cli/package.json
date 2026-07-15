@@ -1,6 +1,6 @@
 {
   "name": "@xuanyuku/cli",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
     "lint": "eslint \"src/**/*.ts\""
   },
   "bin": {
-    "xuanyuku": "dist/bin/xuanyuku.js"
+    "xuanyuku-cli": "dist/bin/xuanyuku.js"
   },
   "dependencies": {
     "@xuanyuku/shared": "workspace:*",
